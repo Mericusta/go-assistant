@@ -1,0 +1,12 @@
+github.com/Mericusta/go-extractor v0.4.7-0.20230206030350-ff5e7ed5cb9c h1:KeIEpNTv9RUzHXQWgr98YFGx6lW6ppvEBZ7zWsYtSt8=
+github.com/Mericusta/go-extractor v0.4.7-0.20230206030350-ff5e7ed5cb9c/go.mod h1:aWf0IU4I0cpAyRJHnuoIm4+w5SNo2A32S1rS0Pfr8iE=
+github.com/Mericusta/go-extractor v0.5.1 h1:wULsF/ciIX2qgdYhs9Ly3jdUFCeiL3hhiiLVOt9FWjA=
+github.com/Mericusta/go-extractor v0.5.1/go.mod h1:aWf0IU4I0cpAyRJHnuoIm4+w5SNo2A32S1rS0Pfr8iE=
+github.com/Mericusta/go-extractor v0.6.0 h1:2DLcq8wLB8M3hKKZ/boH/nIhAPEdenJ4qFPxH9KnL8U=
+github.com/Mericusta/go-extractor v0.6.0/go.mod h1:aWf0IU4I0cpAyRJHnuoIm4+w5SNo2A32S1rS0Pfr8iE=
+github.com/Mericusta/go-extractor v0.6.1 h1:0w8XVdbcRx0zyQkSJFC4Qs2YiTJrO2ct7PB4HOqK+nw=
+github.com/Mericusta/go-extractor v0.6.1/go.mod h1:aWf0IU4I0cpAyRJHnuoIm4+w5SNo2A32S1rS0Pfr8iE=
+github.com/Mericusta/go-extractor v0.6.2 h1:H1spJsQhxRdjs9Q/4a3PXWZQ8p2dA6WMDThxLFbZkZc=
+github.com/Mericusta/go-extractor v0.6.2/go.mod h1:aWf0IU4I0cpAyRJHnuoIm4+w5SNo2A32S1rS0Pfr8iE=
+github.com/Mericusta/go-stp v0.4.1 h1:vS6l9MZwaPaLZzGFZHZRNNbKq6BQj5BcTd/9KAwePB4=
+github.com/Mericusta/go-stp v0.4.1/go.mod h1:QWvceWQxbtUdM5ImfE2W4Bdp1USSssPOM4j0AGsSSe4=

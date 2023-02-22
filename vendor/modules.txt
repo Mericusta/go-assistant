@@ -1,0 +1,7 @@
+# github.com/Mericusta/go-extractor v0.6.2
+## explicit; go 1.18
+github.com/Mericusta/go-extractor
+# github.com/Mericusta/go-stp v0.4.1
+## explicit; go 1.18
+github.com/Mericusta/go-stp/convert
+github.com/Mericusta/go-stp/map
