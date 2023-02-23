@@ -13,11 +13,11 @@ cd cmd/ && go install
 - generate unit test from a function
 
 ```shell
-goass -cmd=generator -opt=unittest -args="<FILE_REL_PATH>;<FUNC_NAME>"
+goass -cmd=generate -opt=unittest -file=<FILE_PATH> -func=<FUNC_NAME>
 ```
 
 - generate unit test from a generic function specified type args
 
 ```shell
-goass -cmd=generator -opt=unittest -args="<FILE_REL_PATH>;<FUNC_NAME>;<TYPE_ARG>,[TYPE_ARG]"
+goass -cmd=generator -opt=unittest -file=<FILE_REL_PATH> -func=<FUNC_NAME> -types=<TYPE_ARG>[,TYPE_ARG]
 ```

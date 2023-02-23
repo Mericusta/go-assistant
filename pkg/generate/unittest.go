@@ -3,105 +3,126 @@ package generate
 import (
 	"errors"
 	"fmt"
+	"io"
 	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/Mericusta/go-extractor"
-	stpconvert "github.com/Mericusta/go-stp/convert"
 )
 
-type _generateUnittestArg struct {
-	handlePath     string
-	handleFunc     string
-	handleTypeArgs string
-}
-
-var (
-	generateUnittestArg *_generateUnittestArg
-)
-
-func GenerateUnittest(args string) {
-	generateUnittestArg = stpconvert.ConvertStringToStringStruct[_generateUnittestArg](args, ";")
-
-	handlePathAbs, err := filepath.Abs(generateUnittestArg.handlePath)
+func handleFileMeta(argFilepath string) *extractor.GoFileMeta {
+	handlePathAbs, err := filepath.Abs(argFilepath)
 	if err != nil {
 		fmt.Printf("get file abs path occurs error: %v\n", err)
-		return
+		return nil
 	}
 
 	handlePathStat, err := os.Stat(handlePathAbs)
 	if err != nil {
 		fmt.Printf("get file stat occurs error: %v\n", err)
-		return
+		return nil
 	}
 
 	if handlePathStat == nil {
 		fmt.Printf("file not exist\n")
-		return
-	}
-
-	if len(generateUnittestArg.handleFunc) == 0 {
-		fmt.Printf("need specify a func\n")
-		return
+		return nil
 	}
 
 	if handlePathStat != nil && handlePathStat.IsDir() {
 		fmt.Printf("not support dir\n")
-		return
+		return nil
 	}
 
 	gfm, err := extractor.ExtractGoFileMeta(handlePathAbs)
 	if gfm == nil || err != nil {
 		fmt.Printf("extract file meta occurs error: %v\n", err)
+		return nil
+	}
+
+	return gfm
+}
+
+func handleOutput(unittestFilepath, unittestFilePkg, unittestFuncName string, unittestFuncByte []byte, argMode string) {
+	if argMode == "preview" {
+		os.Stdout.Write(unittestFuncByte)
 		return
 	}
 
-	unittestFuncByte := handleSingleFunc(handlePathAbs, generateUnittestArg.handleFunc, strings.Split(generateUnittestArg.handleTypeArgs, ","))
-
-	unittestFilePath := fmt.Sprintf("%v_test.go", strings.Trim(handlePathAbs, ".go"))
-	unittestFileStat, err := os.Stat(unittestFilePath)
+	unittestFileStat, err := os.Stat(unittestFilepath)
 	if unittestFileStat == nil && !errors.Is(err, fs.ErrNotExist) {
-		fmt.Printf("get unit test file %v stat occurs error: %v\n", unittestFilePath, err)
+		fmt.Printf("get unit test file %v stat occurs error: %v\n", unittestFilepath, err)
 		return
 	}
 
-	unittestFileHandler, err := os.OpenFile(unittestFilePath, os.O_CREATE|os.O_APPEND|os.O_RDWR, 0644)
+	unittestFileHandler, err := os.OpenFile(unittestFilepath, os.O_CREATE|os.O_APPEND|os.O_RDWR, 0644)
 	if err != nil {
-		fmt.Printf("create unit test file %v occurs error: %v\n", unittestFilePath, err)
+		fmt.Printf("create unit test file %v occurs error: %v\n", unittestFilepath, err)
 		return
 	}
 	defer unittestFileHandler.Close()
 
 	if unittestFileStat == nil {
-		unittestFileHandler.Write(extractor.MakeUnitTestFile(gfm.PkgName(), nil))
+		unittestFileHandler.Write(extractor.MakeUnitTestFile(unittestFilePkg, nil))
 	}
 
-	unittestFileHandler.WriteString("\n")
-	unittestFileHandler.Write(unittestFuncByte)
+	switch argMode {
+	case "append":
+		unittestFileHandler.WriteString("\n")
+		unittestFileHandler.Write(unittestFuncByte)
+	case "replace":
+		unittestFileMeta, err := extractor.ExtractGoFileMeta(unittestFilepath)
+		if err != nil {
+			fmt.Printf("extract unittest file meta occurs error: %v\n", err)
+			return
+		}
+		oldUnittestFuncMeta := extractor.SearchGoFunctionMeta(unittestFileMeta, unittestFuncName)
+		if oldUnittestFuncMeta == nil {
+			unittestFileHandler.WriteString("\n")
+			unittestFileHandler.Write(unittestFuncByte)
+		} else {
+			oldUnittestFuncContent := oldUnittestFuncMeta.Expression()
+			unittestFileContent, err := io.ReadAll(unittestFileHandler)
+			if err != nil {
+				fmt.Printf("read unittest file content occurs error: %v\n", err)
+				return
+			}
+			unittestFileHandler.Close()
 
-	extractor.GoFmtFile(unittestFilePath)
+			unittestFileHandler, err := os.OpenFile(unittestFilepath, os.O_TRUNC|os.O_RDWR, 0644)
+			if err != nil {
+				fmt.Printf("create unit test file %v occurs error: %v\n", unittestFilepath, err)
+				return
+			}
+			replacedFileContent := strings.ReplaceAll(
+				strings.ReplaceAll(string(unittestFileContent), "\r", ""),
+				strings.ReplaceAll(oldUnittestFuncContent, "\r", ""),
+				string(unittestFuncByte),
+			)
+			unittestFileHandler.WriteString(replacedFileContent)
+			unittestFileHandler.Close()
+		}
+	}
+
+	extractor.GoFmtFile(unittestFilepath)
 }
 
-// func handleSingleFile(handlePath string) {
-// 	extractor.ExtractGoFileMeta(handlePath)
-// }
-
-func handleSingleFunc(handlePath, handleFunc string, handleTypeArgs []string) []byte {
-	// gfm, _ := extractor.ExtractGoFileMeta(handlePath)
-	// gfm.PrintAST()
-	// return nil
-
-	gfm, err := extractor.ExtractGoFunctionMeta(handlePath, handleFunc)
-	if err != nil {
-		fmt.Printf("extract go function meta occurs error: %v\n", err)
-		return nil
+func GenerateUnittest(argFilepath, argFuncName, argTypeArgs, argMode string) {
+	if len(argFilepath) == 0 || len(argFuncName) == 0 {
+		fmt.Printf("not enough options, file %v, func %v\n", argFilepath, argFuncName)
+		return
 	}
 
-	if len(gfm.TypeParams()) > 0 {
-		return extractor.MakeUnitTestWithTypeArgs(gfm, handleTypeArgs)
+	handleFileMeta := handleFileMeta(argFilepath)
+	handleFuncMeta := extractor.SearchGoFunctionMeta(handleFileMeta, argFuncName)
+	if handleFuncMeta == nil {
+		fmt.Printf("can not find func meta\n")
+		return
 	}
 
-	return extractor.MakeUnitTest(gfm)
+	unittestFuncName, unittestFuncByte := handleFuncMeta.MakeUnitTest(strings.Split(argTypeArgs, ","))
+	unittestFilepath := fmt.Sprintf("%v_test.go", strings.Trim(handleFileMeta.Path(), ".go"))
+
+	handleOutput(unittestFilepath, handleFileMeta.PkgName(), unittestFuncName, unittestFuncByte, argMode)
 }

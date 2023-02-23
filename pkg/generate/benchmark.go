@@ -1,32 +1,41 @@
 package generate
 
-type generateBenchmarkArgs struct {
-}
+import (
+	"fmt"
+	"os"
+	"path/filepath"
 
-func (a *generateBenchmarkArgs) SliceGenerateBenchmark(arg1, arg2 string) (*generateBenchmarkArgs, []*generateBenchmarkArgs) {
-	return nil, nil
-}
+	"github.com/Mericusta/go-extractor"
+)
 
-func SliceGenerateBenchmark(arg1, arg2 string) (*generateBenchmarkArgs, []*generateBenchmarkArgs) {
-	return nil, nil
-}
+func GenerateBenchmark(argFilepath, argFuncName, argMode string, fromUnittest bool) {
+	handlePathAbs, err := filepath.Abs(argFilepath)
+	if err != nil {
+		fmt.Printf("get file abs path occurs error: %v\n", err)
+		return
+	}
 
-func (a *generateBenchmarkArgs) NonReturnGenerateBenchmark(arg1, arg2 string) {
+	handlePathStat, err := os.Stat(handlePathAbs)
+	if err != nil {
+		fmt.Printf("get file stat occurs error: %v\n", err)
+		return
+	}
 
-}
+	if handlePathStat == nil {
+		fmt.Printf("file not exist\n")
+		return
+	}
 
-func NonReturnGenerateBenchmark(arg1, arg2 string) {
+	if handlePathStat != nil && handlePathStat.IsDir() {
+		fmt.Printf("not support dir\n")
+		return
+	}
 
-}
+	gfm, err := extractor.ExtractGoFileMeta(handlePathAbs)
+	if gfm == nil || err != nil {
+		fmt.Printf("extract file meta occurs error: %v\n", err)
+		return
+	}
 
-func TemplateFunc[T any](arg1, arg2 string, arg3 *T) *T {
-	return nil
-}
-
-func (a *generateBenchmarkArgs) NonArgsGenerateBenchmark() {
-
-}
-
-func NonArgsGenerateBenchmark() {
-
+	gfm.PrintAST()
 }
