@@ -2,40 +2,26 @@ package generate
 
 import (
 	"fmt"
-	"os"
-	"path/filepath"
+	"strings"
 
 	"github.com/Mericusta/go-extractor"
 )
 
-func GenerateBenchmark(argFilepath, argFuncName, argMode string, fromUnittest bool) {
-	handlePathAbs, err := filepath.Abs(argFilepath)
-	if err != nil {
-		fmt.Printf("get file abs path occurs error: %v\n", err)
+func GenerateBenchmark(argFilepath, argFuncName, argMode, argTypeArgs string, fromUnittest bool) {
+	if len(argFilepath) == 0 || len(argFuncName) == 0 {
+		fmt.Printf("not enough options, file %v, func %v\n", argFilepath, argFuncName)
 		return
 	}
 
-	handlePathStat, err := os.Stat(handlePathAbs)
-	if err != nil {
-		fmt.Printf("get file stat occurs error: %v\n", err)
+	handleFileMeta := handleFileMeta(argFilepath)
+	handleFuncMeta := extractor.SearchGoFunctionMeta(handleFileMeta, argFuncName)
+	if handleFuncMeta == nil {
+		fmt.Printf("can not find func meta\n")
 		return
 	}
 
-	if handlePathStat == nil {
-		fmt.Printf("file not exist\n")
-		return
-	}
+	benchmarkFuncName, benchmarkFuncByte := handleFuncMeta.MakeBenchmark(strings.Split(argTypeArgs, ","))
+	benchmarkFilepath := fmt.Sprintf("%v_benchmark_test.go", strings.Trim(handleFileMeta.Path(), ".go"))
 
-	if handlePathStat != nil && handlePathStat.IsDir() {
-		fmt.Printf("not support dir\n")
-		return
-	}
-
-	gfm, err := extractor.ExtractGoFileMeta(handlePathAbs)
-	if gfm == nil || err != nil {
-		fmt.Printf("extract file meta occurs error: %v\n", err)
-		return
-	}
-
-	gfm.PrintAST()
+	handleOutput(benchmarkFilepath, handleFileMeta.PkgName(), benchmarkFuncName, benchmarkFuncByte, argMode)
 }

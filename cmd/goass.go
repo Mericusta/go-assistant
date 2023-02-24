@@ -39,6 +39,6 @@ func main() {
 	case *command == "generate" && *option == "unittest":
 		generate.GenerateUnittest(*argFilepath, *argFuncName, *argTypeArgs, *argMode)
 	case *command == "generate" && *option == "benchmark":
-		generate.GenerateBenchmark(*argFilepath, *argFuncName, *argMode, *argFromUnittest)
+		generate.GenerateBenchmark(*argFilepath, *argFuncName, *argMode, *argTypeArgs, *argFromUnittest)
 	}
 }
