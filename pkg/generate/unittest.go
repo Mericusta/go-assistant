@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/Mericusta/go-assistant/pkg/utility"
 	"github.com/Mericusta/go-extractor"
 )
 
@@ -13,7 +14,10 @@ func GenerateUnittest(argFilepath, argFuncName, argTypeArgs, argMode string) {
 		return
 	}
 
-	handleFileMeta := handleFileMeta(argFilepath)
+	handleFileMeta := utility.HandleFileMeta(argFilepath)
+	if handleFileMeta == nil {
+		return
+	}
 	handleFuncMeta := extractor.SearchGoFunctionMeta(handleFileMeta, argFuncName)
 	if handleFuncMeta == nil {
 		fmt.Printf("can not find func meta\n")

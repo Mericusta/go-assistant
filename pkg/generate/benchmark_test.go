@@ -6,11 +6,10 @@ import (
 
 func Test_GenerateBenchmark(t *testing.T) {
 	type args struct {
-		argFilepath  string
-		argFuncName  string
-		argMode      string
-		argTypeArgs  string
-		fromUnittest bool
+		argFilepath string
+		argFuncName string
+		argMode     string
+		argTypeArgs string
 	}
 	tests := []struct {
 		name string
@@ -79,7 +78,7 @@ func Test_GenerateBenchmark(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			GenerateBenchmark(tt.args.argFilepath, tt.args.argFuncName, tt.args.argMode, tt.args.argTypeArgs, tt.args.fromUnittest)
+			GenerateBenchmark(tt.args.argFilepath, tt.args.argFuncName, tt.args.argMode, tt.args.argTypeArgs)
 		})
 	}
 }
