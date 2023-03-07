@@ -24,7 +24,11 @@ func GenerateUnittest(argFilepath, argFuncName, argTypeArgs, argMode string) {
 		return
 	}
 
-	unittestFuncName, unittestFuncByte := handleFuncMeta.MakeUnitTest(strings.Split(argTypeArgs, ","))
+	var argTypes []string
+	if len(argTypeArgs) != 0 {
+		argTypes = strings.Split(argTypeArgs, ",")
+	}
+	unittestFuncName, unittestFuncByte := handleFuncMeta.MakeUnitTest(argTypes)
 	unittestFilepath := fmt.Sprintf("%v_test.go", strings.Trim(handleFileMeta.Path(), ".go"))
 
 	handleOutput(unittestFilepath, handleFileMeta.PkgName(), unittestFuncName, unittestFuncByte, argMode)
