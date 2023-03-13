@@ -29,7 +29,8 @@ func GenerateUnittest(argFilepath, argFuncName, argTypeArgs, argMode string) {
 		argTypes = strings.Split(argTypeArgs, ",")
 	}
 	unittestFuncName, unittestFuncByte := handleFuncMeta.MakeUnitTest(argTypes)
-	unittestFilepath := fmt.Sprintf("%v_test.go", strings.Trim(handleFileMeta.Path(), ".go"))
+	handleFilePath := handleFileMeta.Path()
+	unittestFilepath := fmt.Sprintf("%v_test.go", handleFilePath[:strings.LastIndex(handleFilePath, ".go")])
 
 	handleOutput(unittestFilepath, handleFileMeta.PkgName(), unittestFuncName, unittestFuncByte, argMode)
 }

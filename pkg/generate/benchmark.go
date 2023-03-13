@@ -29,7 +29,8 @@ func GenerateBenchmark(argFilepath, argFuncName, argMode, argTypeArgs string) {
 		argTypes = strings.Split(argTypeArgs, ",")
 	}
 	benchmarkFuncName, benchmarkFuncByte := handleFuncMeta.MakeBenchmark(argTypes)
-	benchmarkFilepath := fmt.Sprintf("%v_benchmark_test.go", strings.Trim(handleFileMeta.Path(), ".go"))
+	handleFilePath := handleFileMeta.Path()
+	benchmarkFilepath := fmt.Sprintf("%v_benchmark_test.go", handleFilePath[:strings.LastIndex(handleFilePath, ".go")])
 
 	handleOutput(benchmarkFilepath, handleFileMeta.PkgName(), benchmarkFuncName, benchmarkFuncByte, argMode)
 }
