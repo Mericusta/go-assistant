@@ -4,10 +4,12 @@ import "testing"
 
 func TestGenerateUnittest(t *testing.T) {
 	type args struct {
-		argFilepath string
-		argFuncName string
-		argTypeArgs string
-		argMode     string
+		argFilepath      string
+		argFuncName      string
+		argStructName    string
+		argInterfaceName string
+		argTypeArgs      string
+		argMode          string
 	}
 	tests := []struct {
 		name string
@@ -74,10 +76,37 @@ func TestGenerateUnittest(t *testing.T) {
 				argMode:     "replace",
 			},
 		},
+		{
+			"test case 8",
+			args{
+				argFilepath:   "../../resources/example.go",
+				argFuncName:   "ExampleStruct1Method1",
+				argStructName: "ExampleStruct1",
+				argMode:       "replace",
+			},
+		},
+		{
+			"test case 9",
+			args{
+				argFilepath:      "../../resources/example.go",
+				argFuncName:      "NormalInterfaceMethod",
+				argInterfaceName: "NormalInterface",
+				argMode:          "replace",
+			},
+		},
+		{
+			"test case 10",
+			args{
+				argFilepath:      "../../resources/example.go",
+				argFuncName:      "GenericInterfaceMethod",
+				argInterfaceName: "GenericInterface",
+				argMode:          "replace",
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			GenerateUnittest(tt.args.argFilepath, tt.args.argFuncName, tt.args.argTypeArgs, tt.args.argMode)
+			GenerateUnittest(tt.args.argFilepath, tt.args.argFuncName, tt.args.argStructName, tt.args.argInterfaceName, tt.args.argTypeArgs, tt.args.argMode)
 		})
 	}
 }

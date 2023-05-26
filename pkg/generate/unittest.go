@@ -8,7 +8,7 @@ import (
 	"github.com/Mericusta/go-extractor"
 )
 
-func GenerateUnittest(argFilepath, argFuncName, argTypeArgs, argMode string) {
+func GenerateUnittest(argFilepath, argFuncName, argStructName, argInterfaceName, argTypeArgs, argMode string) {
 	if len(argFilepath) == 0 || len(argFuncName) == 0 {
 		fmt.Printf("not enough options, file %v, func %v\n", argFilepath, argFuncName)
 		return
@@ -18,9 +18,28 @@ func GenerateUnittest(argFilepath, argFuncName, argTypeArgs, argMode string) {
 	if handleFileMeta == nil {
 		return
 	}
-	handleFuncMeta := extractor.SearchGoFunctionMeta(handleFileMeta, argFuncName)
-	if handleFuncMeta == nil {
-		fmt.Printf("can not find func meta\n")
+
+	var (
+		handleMeta  extractor.GoTestMaker
+		isMethod    bool = len(argStructName) != 0
+		isInterface bool = len(argInterfaceName) != 0
+	)
+
+	switch {
+	case isMethod:
+		handleMeta = extractor.SearchGoMethodMeta(handleFileMeta, argStructName, argFuncName)
+	case isInterface:
+		gim := extractor.SearchGoInterfaceMeta(handleFileMeta, argInterfaceName)
+		if gim == nil {
+			fmt.Printf("can not find interface")
+			return
+		}
+		handleMeta = gim.SearchMethodDecl(argFuncName)
+	default:
+		handleMeta = extractor.SearchGoFunctionMeta(handleFileMeta, argFuncName)
+	}
+	if handleMeta == nil {
+		fmt.Printf("can not find meta\n")
 		return
 	}
 
@@ -28,7 +47,8 @@ func GenerateUnittest(argFilepath, argFuncName, argTypeArgs, argMode string) {
 	if len(argTypeArgs) != 0 {
 		argTypes = strings.Split(argTypeArgs, ",")
 	}
-	unittestFuncName, unittestFuncByte := handleFuncMeta.MakeUnitTest(argTypes)
+
+	unittestFuncName, unittestFuncByte := handleMeta.MakeUnitTest(argTypes)
 	handleFilePath := handleFileMeta.Path()
 	unittestFilepath := fmt.Sprintf("%v_test.go", handleFilePath[:strings.LastIndex(handleFilePath, ".go")])
 

@@ -10,7 +10,7 @@ import (
 
 func GenerateAST(argFilepath, argIdentType, argIdentNames string) {
 	if len(argFilepath) == 0 || len(argIdentType) == 0 || len(argIdentNames) == 0 {
-		fmt.Printf("not enough options, file %v, ident type %v, ident names %v\n", argFilepath, argIdentType, argIdentNames)
+		fmt.Printf("not enough options, file %v, meta type %v, meta ident names %v\n", argFilepath, argIdentType, argIdentNames)
 		return
 	}
 

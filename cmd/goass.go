@@ -19,14 +19,15 @@ var (
 	argMode     = flag.String("mode", "replace", "replace or append or preview in stdout")
 
 	// generate var
-	argFuncName   = flag.String("func", "", "generate test function name")
-	argTypeArgs   = flag.String("types", "", "generate generic test function type arguments")
-	argMetaType   = flag.String("meta", "", "search meta type: func, method, struct, interface")
-	argMetaIdents = flag.String("idents", "", "search meta idents: ident1[,ident1]")
+	argFuncName      = flag.String("func", "", "generate test function name")
+	argStructName    = flag.String("struct", "", "generate test struct name")
+	argInterfaceName = flag.String("interface", "", "generate test interface name")
+	argTypeArgs      = flag.String("types", "", "generate generic test function type arguments")
+	argMetaType      = flag.String("meta", "", "search meta type: func, method, struct, interface")
+	argMetaIdent     = flag.String("ident", "", "search meta ident: ident1[,ident1]")
 
 	// infer var
 	argPlatform          = flag.Int("platform", 64, "32 or 64")
-	argStructName        = flag.String("struct", "", "infer struct name")
 	argProcess           = flag.Bool("process", false, "show calculate process or not")
 	argAllocationPreview = flag.Bool("preview", false, "show allocation preview")
 
@@ -41,11 +42,11 @@ func init() {
 func main() {
 	switch {
 	case *command == "generate" && *option == "unittest":
-		generate.GenerateUnittest(*argFilepath, *argFuncName, *argTypeArgs, *argMode)
+		generate.GenerateUnittest(*argFilepath, *argFuncName, *argStructName, *argInterfaceName, *argTypeArgs, *argMode)
 	case *command == "generate" && *option == "benchmark":
 		generate.GenerateBenchmark(*argFilepath, *argFuncName, *argMode, *argTypeArgs)
 	case *command == "generate" && *option == "ast":
-		generate.GenerateAST(*argFilepath, *argMetaType, *argMetaIdents)
+		generate.GenerateAST(*argFilepath, *argMetaType, *argMetaIdent)
 	case *command == "infer" && *option == "allocation":
 		infer.InferTheOptimalLayoutOfStructMemory(*argPlatform, *argFilepath, *argStructName, *argAllocationPreview, *argProcess)
 	case *command == "search" && *option == "log":

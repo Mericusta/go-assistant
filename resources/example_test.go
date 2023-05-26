@@ -115,3 +115,105 @@ func Test_TypeConstraintsTemplateFunc_e9568baeb7bb7af5d4168fa861979e8c(t *testin
 		})
 	}
 }
+
+func Test_ExampleStruct1_ExampleStruct1Method1(t *testing.T) {
+	type args struct {
+		b    bool
+		i64  int64
+		f64  float64
+		c128 complex128
+	}
+	tests := []struct {
+		name  string
+		s     *ExampleStruct1
+		args  args
+		want0 bool
+		want1 int64
+		want2 float64
+		want3 complex128
+	}{}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got0, got1, got2, got3 := tt.s.ExampleStruct1Method1(tt.args.b, tt.args.i64, tt.args.f64, tt.args.c128)
+			if !reflect.DeepEqual(got0, tt.want0) {
+				t.Errorf("ExampleStruct1Method1() got0 = %v, want0 %v", got0, tt.want0)
+			}
+			if !reflect.DeepEqual(got1, tt.want1) {
+				t.Errorf("ExampleStruct1Method1() got1 = %v, want1 %v", got1, tt.want1)
+			}
+			if !reflect.DeepEqual(got2, tt.want2) {
+				t.Errorf("ExampleStruct1Method1() got2 = %v, want2 %v", got2, tt.want2)
+			}
+			if !reflect.DeepEqual(got3, tt.want3) {
+				t.Errorf("ExampleStruct1Method1() got3 = %v, want3 %v", got3, tt.want3)
+			}
+		})
+	}
+}
+
+func Test_NormalInterface_NormalInterfaceMethod(t *testing.T) {
+	type args struct {
+		p0 int8
+		p1 int16
+		p2 uint8
+		p3 uint16
+	}
+	tests := []struct {
+		name  string
+		i     NormalInterface
+		args  args
+		want0 int8
+		want1 int16
+		want2 uint8
+		want3 uint16
+	}{}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got0, got1, got2, got3 := tt.i.NormalInterfaceMethod(tt.args.p0, tt.args.p1, tt.args.p2, tt.args.p3)
+			if !reflect.DeepEqual(got0, tt.want0) {
+				t.Errorf("NormalInterfaceMethod() got0 = %v, want0 %v", got0, tt.want0)
+			}
+			if !reflect.DeepEqual(got1, tt.want1) {
+				t.Errorf("NormalInterfaceMethod() got1 = %v, want1 %v", got1, tt.want1)
+			}
+			if !reflect.DeepEqual(got2, tt.want2) {
+				t.Errorf("NormalInterfaceMethod() got2 = %v, want2 %v", got2, tt.want2)
+			}
+			if !reflect.DeepEqual(got3, tt.want3) {
+				t.Errorf("NormalInterfaceMethod() got3 = %v, want3 %v", got3, tt.want3)
+			}
+		})
+	}
+}
+
+func Test_ExampleTemplateInterface_ExampleFunc_6d6d5833d0a567609a6a6de032241d35(t *testing.T) {
+	type args struct {
+		p0 string
+	}
+	tests := []struct {
+		name string
+		i    ExampleTemplateInterface[string]
+		args args
+	}{}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.i.ExampleFunc(tt.args.p0)
+		})
+	}
+}
+
+func Test_OneTypeTemplateStruct_V_6d6d5833d0a567609a6a6de032241d35(t *testing.T) {
+	tests := []struct {
+		name  string
+		s     *OneTypeTemplateStruct[int]
+		want0 int
+	}{}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got0 := tt.s.V()
+			if !reflect.DeepEqual(got0, tt.want0) {
+				t.Errorf("V() got0 = %v, want0 %v", got0, tt.want0)
+			}
+		})
+	}
+}
