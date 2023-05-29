@@ -73,6 +73,30 @@ func Test_OneTemplateFunc_6d6d5833d0a567609a6a6de032241d35(t *testing.T) {
 	}
 }
 
+func Test_DoubleSameTemplateFunc_3b4f7099c4644d92f9dcc05adad31ba6(t *testing.T) {
+	type args struct {
+		tv1 reflect.SliceHeader
+		tv2 reflect.SliceHeader
+	}
+	tests := []struct {
+		name  string
+		args  args
+		want0 *reflect.SliceHeader
+		want1 *reflect.SliceHeader
+	}{}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got0, got1 := DoubleSameTemplateFunc(tt.args.tv1, tt.args.tv2)
+			if !reflect.DeepEqual(got0, tt.want0) {
+				t.Errorf("DoubleSameTemplateFunc() got0 = %v, want0 %v", got0, tt.want0)
+			}
+			if !reflect.DeepEqual(got1, tt.want1) {
+				t.Errorf("DoubleSameTemplateFunc() got1 = %v, want1 %v", got1, tt.want1)
+			}
+		})
+	}
+}
+
 func Test_DoubleDifferenceTemplateFunc_ced46be80777d0e8dc06e94a495ea5b6(t *testing.T) {
 	type args struct {
 		tv1 string
@@ -202,17 +226,67 @@ func Test_ExampleTemplateInterface_ExampleFunc_6d6d5833d0a567609a6a6de032241d35(
 	}
 }
 
-func Test_OneTypeTemplateStruct_V_6d6d5833d0a567609a6a6de032241d35(t *testing.T) {
+func Test_ExampleTemplateInterface_AnotherExampleFunc_6d6d5833d0a567609a6a6de032241d35(t *testing.T) {
+	type args struct {
+		p0 string
+		p1 []string
+	}
 	tests := []struct {
 		name  string
-		s     *OneTypeTemplateStruct[int]
-		want0 int
+		i     ExampleTemplateInterface[string]
+		args  args
+		want0 string
+		want1 []string
 	}{}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got0 := tt.s.V()
+			got0, got1 := tt.i.AnotherExampleFunc(tt.args.p0, tt.args.p1)
+			if !reflect.DeepEqual(got0, tt.want0) {
+				t.Errorf("AnotherExampleFunc() got0 = %v, want0 %v", got0, tt.want0)
+			}
+			if !reflect.DeepEqual(got1, tt.want1) {
+				t.Errorf("AnotherExampleFunc() got1 = %v, want1 %v", got1, tt.want1)
+			}
+		})
+	}
+}
+
+func Test_OneTypeTemplateStruct_V_6d6d5833d0a567609a6a6de032241d35(t *testing.T) {
+	tests := []struct {
+		name  string
+		t     *OneTypeTemplateStruct[string]
+		want0 string
+	}{}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got0 := tt.t.V()
 			if !reflect.DeepEqual(got0, tt.want0) {
 				t.Errorf("V() got0 = %v, want0 %v", got0, tt.want0)
+			}
+		})
+	}
+}
+
+func Test_TwoTypeTemplateStruct_KVSlice_f8d79beb910f9b7740f701743544b509(t *testing.T) {
+	type args struct {
+		k int8
+		v reflect.StringHeader
+	}
+	tests := []struct {
+		name  string
+		t     *TwoTypeTemplateStruct[int8, reflect.StringHeader]
+		args  args
+		want0 []int8
+		want1 []reflect.StringHeader
+	}{}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got0, got1 := tt.t.KVSlice(tt.args.k, tt.args.v)
+			if !reflect.DeepEqual(got0, tt.want0) {
+				t.Errorf("KVSlice() got0 = %v, want0 %v", got0, tt.want0)
+			}
+			if !reflect.DeepEqual(got1, tt.want1) {
+				t.Errorf("KVSlice() got1 = %v, want1 %v", got1, tt.want1)
 			}
 		})
 	}

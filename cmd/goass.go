@@ -42,9 +42,9 @@ func init() {
 func main() {
 	switch {
 	case *command == "generate" && *option == "unittest":
-		generate.GenerateUnittest(*argFilepath, *argFuncName, *argStructName, *argInterfaceName, *argTypeArgs, *argMode)
+		generate.GenerateUnittest(*argFilepath, *argFuncName, *argStructName, *argInterfaceName, *argTypeArgs, *argMode, *args)
 	case *command == "generate" && *option == "benchmark":
-		generate.GenerateBenchmark(*argFilepath, *argFuncName, *argMode, *argTypeArgs)
+		generate.GenerateBenchmark(*argFilepath, *argFuncName, *argStructName, *argInterfaceName, *argTypeArgs, *argMode, *args)
 	case *command == "generate" && *option == "ast":
 		generate.GenerateAST(*argFilepath, *argMetaType, *argMetaIdent)
 	case *command == "infer" && *option == "allocation":

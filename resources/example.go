@@ -75,7 +75,7 @@ type TwoTypeTemplateStruct[K TypeConstraints, V any] struct {
 	v map[K]V
 }
 
-func (t *TwoTypeTemplateStruct[K, V]) KVSlice() ([]K, []V) {
+func (t *TwoTypeTemplateStruct[K, V]) KVSlice(k K, v V) ([]K, []V) {
 	ks := make([]K, 0, len(t.v))
 	vs := make([]V, 0, len(t.v))
 	for k, v := range t.v {

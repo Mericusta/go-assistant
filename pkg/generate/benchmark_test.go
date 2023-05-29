@@ -6,15 +6,19 @@ import (
 
 func Test_GenerateBenchmark(t *testing.T) {
 	type args struct {
-		argFilepath string
-		argFuncName string
-		argMode     string
-		argTypeArgs string
+		argFilepath      string
+		argFuncName      string
+		argStructName    string
+		argInterfaceName string
+		argTypeArgs      string
+		argMode          string
+		arg              string
 	}
 	tests := []struct {
 		name string
 		args args
 	}{
+		// TODO: Add test cases.
 		{
 			"test case 1",
 			args{
@@ -75,10 +79,68 @@ func Test_GenerateBenchmark(t *testing.T) {
 				argMode:     "replace",
 			},
 		},
+		{
+			"test case 8",
+			args{
+				argFilepath:   "../../resources/example.go",
+				argFuncName:   "ExampleStruct1Method1",
+				argStructName: "ExampleStruct1",
+				argMode:       "replace",
+			},
+		},
+		{
+			"test case 9",
+			args{
+				argFilepath:      "../../resources/example.go",
+				argFuncName:      "NormalInterfaceMethod",
+				argInterfaceName: "NormalInterface",
+				argMode:          "replace",
+			},
+		},
+		{
+			"test case 10",
+			args{
+				argFilepath:      "../../resources/example.go",
+				argFuncName:      "ExampleFunc",
+				argInterfaceName: "ExampleTemplateInterface",
+				argTypeArgs:      "string",
+				argMode:          "replace",
+			},
+		},
+		{
+			"test case 11",
+			args{
+				argFilepath:      "../../resources/example.go",
+				argFuncName:      "AnotherExampleFunc",
+				argInterfaceName: "ExampleTemplateInterface",
+				argTypeArgs:      "string",
+				argMode:          "replace",
+			},
+		},
+		{
+			"test case 12",
+			args{
+				argFilepath:   "../../resources/example.go",
+				argFuncName:   "V",
+				argStructName: "OneTypeTemplateStruct",
+				argTypeArgs:   "string",
+				argMode:       "replace",
+			},
+		},
+		{
+			"test case 13",
+			args{
+				argFilepath:   "../../resources/example.go",
+				argFuncName:   "KVSlice",
+				argStructName: "TwoTypeTemplateStruct",
+				argTypeArgs:   "int8,reflect.StringHeader",
+				argMode:       "replace",
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			GenerateBenchmark(tt.args.argFilepath, tt.args.argFuncName, tt.args.argMode, tt.args.argTypeArgs)
+			GenerateBenchmark(tt.args.argFilepath, tt.args.argFuncName, tt.args.argStructName, tt.args.argInterfaceName, tt.args.argTypeArgs, tt.args.argMode, tt.args.arg)
 		})
 	}
 }
