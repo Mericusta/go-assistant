@@ -1,0 +1,63 @@
+     0  *ast.TypeSpec {
+     1  .  Name: *ast.Ident {
+     2  .  .  NamePos: -
+     3  .  .  Name: "OneTypeTemplateStruct"
+     4  .  .  Obj: *ast.Object {
+     5  .  .  .  Kind: type
+     6  .  .  .  Name: "OneTypeTemplateStruct"
+     7  .  .  .  Decl: *(obj @ 0)
+     8  .  .  }
+     9  .  }
+    10  .  TypeParams: *ast.FieldList {
+    11  .  .  Opening: -
+    12  .  .  List: []*ast.Field (len = 1) {
+    13  .  .  .  0: *ast.Field {
+    14  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    15  .  .  .  .  .  0: *ast.Ident {
+    16  .  .  .  .  .  .  NamePos: -
+    17  .  .  .  .  .  .  Name: "T"
+    18  .  .  .  .  .  .  Obj: *ast.Object {
+    19  .  .  .  .  .  .  .  Kind: type
+    20  .  .  .  .  .  .  .  Name: "T"
+    21  .  .  .  .  .  .  .  Decl: *(obj @ 13)
+    22  .  .  .  .  .  .  }
+    23  .  .  .  .  .  }
+    24  .  .  .  .  }
+    25  .  .  .  .  Type: *ast.Ident {
+    26  .  .  .  .  .  NamePos: -
+    27  .  .  .  .  .  Name: "any"
+    28  .  .  .  .  }
+    29  .  .  .  }
+    30  .  .  }
+    31  .  .  Closing: -
+    32  .  }
+    33  .  Assign: -
+    34  .  Type: *ast.StructType {
+    35  .  .  Struct: -
+    36  .  .  Fields: *ast.FieldList {
+    37  .  .  .  Opening: -
+    38  .  .  .  List: []*ast.Field (len = 1) {
+    39  .  .  .  .  0: *ast.Field {
+    40  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    41  .  .  .  .  .  .  0: *ast.Ident {
+    42  .  .  .  .  .  .  .  NamePos: -
+    43  .  .  .  .  .  .  .  Name: "v"
+    44  .  .  .  .  .  .  .  Obj: *ast.Object {
+    45  .  .  .  .  .  .  .  .  Kind: var
+    46  .  .  .  .  .  .  .  .  Name: "v"
+    47  .  .  .  .  .  .  .  .  Decl: *(obj @ 39)
+    48  .  .  .  .  .  .  .  }
+    49  .  .  .  .  .  .  }
+    50  .  .  .  .  .  }
+    51  .  .  .  .  .  Type: *ast.Ident {
+    52  .  .  .  .  .  .  NamePos: -
+    53  .  .  .  .  .  .  Name: "T"
+    54  .  .  .  .  .  .  Obj: *(obj @ 18)
+    55  .  .  .  .  .  }
+    56  .  .  .  .  }
+    57  .  .  .  }
+    58  .  .  .  Closing: -
+    59  .  .  }
+    60  .  .  Incomplete: false
+    61  .  }
+    62  }

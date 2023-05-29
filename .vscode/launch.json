@@ -12,7 +12,10 @@
             "program": "${fileDirname}",
             "args": [
                 "-cmd=generate",
-                "-opt=unittest",
+                "-opt=ast",
+                "-file=../resources/example.go",
+                "-meta=method",
+                "-ident=ExampleTemplateInterface,AnotherExampleFunc",
             ]
         }
     ]

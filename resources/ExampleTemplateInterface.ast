@@ -1,0 +1,152 @@
+     0  *ast.TypeSpec {
+     1  .  Name: *ast.Ident {
+     2  .  .  NamePos: -
+     3  .  .  Name: "ExampleTemplateInterface"
+     4  .  .  Obj: *ast.Object {
+     5  .  .  .  Kind: type
+     6  .  .  .  Name: "ExampleTemplateInterface"
+     7  .  .  .  Decl: *(obj @ 0)
+     8  .  .  }
+     9  .  }
+    10  .  TypeParams: *ast.FieldList {
+    11  .  .  Opening: -
+    12  .  .  List: []*ast.Field (len = 1) {
+    13  .  .  .  0: *ast.Field {
+    14  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    15  .  .  .  .  .  0: *ast.Ident {
+    16  .  .  .  .  .  .  NamePos: -
+    17  .  .  .  .  .  .  Name: "T"
+    18  .  .  .  .  .  .  Obj: *ast.Object {
+    19  .  .  .  .  .  .  .  Kind: type
+    20  .  .  .  .  .  .  .  Name: "T"
+    21  .  .  .  .  .  .  .  Decl: *(obj @ 13)
+    22  .  .  .  .  .  .  }
+    23  .  .  .  .  .  }
+    24  .  .  .  .  }
+    25  .  .  .  .  Type: *ast.Ident {
+    26  .  .  .  .  .  NamePos: -
+    27  .  .  .  .  .  Name: "any"
+    28  .  .  .  .  }
+    29  .  .  .  }
+    30  .  .  }
+    31  .  .  Closing: -
+    32  .  }
+    33  .  Assign: -
+    34  .  Type: *ast.InterfaceType {
+    35  .  .  Interface: -
+    36  .  .  Methods: *ast.FieldList {
+    37  .  .  .  Opening: -
+    38  .  .  .  List: []*ast.Field (len = 2) {
+    39  .  .  .  .  0: *ast.Field {
+    40  .  .  .  .  .  Doc: *ast.CommentGroup {
+    41  .  .  .  .  .  .  List: []*ast.Comment (len = 1) {
+    42  .  .  .  .  .  .  .  0: *ast.Comment {
+    43  .  .  .  .  .  .  .  .  Slash: -
+    44  .  .  .  .  .  .  .  .  Text: "// This is ExampleFunc Doc"
+    45  .  .  .  .  .  .  .  }
+    46  .  .  .  .  .  .  }
+    47  .  .  .  .  .  }
+    48  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    49  .  .  .  .  .  .  0: *ast.Ident {
+    50  .  .  .  .  .  .  .  NamePos: -
+    51  .  .  .  .  .  .  .  Name: "ExampleFunc"
+    52  .  .  .  .  .  .  .  Obj: *ast.Object {
+    53  .  .  .  .  .  .  .  .  Kind: func
+    54  .  .  .  .  .  .  .  .  Name: "ExampleFunc"
+    55  .  .  .  .  .  .  .  .  Decl: *(obj @ 39)
+    56  .  .  .  .  .  .  .  }
+    57  .  .  .  .  .  .  }
+    58  .  .  .  .  .  }
+    59  .  .  .  .  .  Type: *ast.FuncType {
+    60  .  .  .  .  .  .  Func: -
+    61  .  .  .  .  .  .  Params: *ast.FieldList {
+    62  .  .  .  .  .  .  .  Opening: -
+    63  .  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
+    64  .  .  .  .  .  .  .  .  0: *ast.Field {
+    65  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+    66  .  .  .  .  .  .  .  .  .  .  NamePos: -
+    67  .  .  .  .  .  .  .  .  .  .  Name: "T"
+    68  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 18)
+    69  .  .  .  .  .  .  .  .  .  }
+    70  .  .  .  .  .  .  .  .  }
+    71  .  .  .  .  .  .  .  }
+    72  .  .  .  .  .  .  .  Closing: -
+    73  .  .  .  .  .  .  }
+    74  .  .  .  .  .  }
+    75  .  .  .  .  }
+    76  .  .  .  .  1: *ast.Field {
+    77  .  .  .  .  .  Doc: *ast.CommentGroup {
+    78  .  .  .  .  .  .  List: []*ast.Comment (len = 1) {
+    79  .  .  .  .  .  .  .  0: *ast.Comment {
+    80  .  .  .  .  .  .  .  .  Slash: -
+    81  .  .  .  .  .  .  .  .  Text: "// This is AnotherExampleFunc Doc"
+    82  .  .  .  .  .  .  .  }
+    83  .  .  .  .  .  .  }
+    84  .  .  .  .  .  }
+    85  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    86  .  .  .  .  .  .  0: *ast.Ident {
+    87  .  .  .  .  .  .  .  NamePos: -
+    88  .  .  .  .  .  .  .  Name: "AnotherExampleFunc"
+    89  .  .  .  .  .  .  .  Obj: *ast.Object {
+    90  .  .  .  .  .  .  .  .  Kind: func
+    91  .  .  .  .  .  .  .  .  Name: "AnotherExampleFunc"
+    92  .  .  .  .  .  .  .  .  Decl: *(obj @ 76)
+    93  .  .  .  .  .  .  .  }
+    94  .  .  .  .  .  .  }
+    95  .  .  .  .  .  }
+    96  .  .  .  .  .  Type: *ast.FuncType {
+    97  .  .  .  .  .  .  Func: -
+    98  .  .  .  .  .  .  Params: *ast.FieldList {
+    99  .  .  .  .  .  .  .  Opening: -
+   100  .  .  .  .  .  .  .  List: []*ast.Field (len = 2) {
+   101  .  .  .  .  .  .  .  .  0: *ast.Field {
+   102  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   103  .  .  .  .  .  .  .  .  .  .  NamePos: -
+   104  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   105  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 18)
+   106  .  .  .  .  .  .  .  .  .  }
+   107  .  .  .  .  .  .  .  .  }
+   108  .  .  .  .  .  .  .  .  1: *ast.Field {
+   109  .  .  .  .  .  .  .  .  .  Type: *ast.ArrayType {
+   110  .  .  .  .  .  .  .  .  .  .  Lbrack: -
+   111  .  .  .  .  .  .  .  .  .  .  Elt: *ast.Ident {
+   112  .  .  .  .  .  .  .  .  .  .  .  NamePos: -
+   113  .  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   114  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 18)
+   115  .  .  .  .  .  .  .  .  .  .  }
+   116  .  .  .  .  .  .  .  .  .  }
+   117  .  .  .  .  .  .  .  .  }
+   118  .  .  .  .  .  .  .  }
+   119  .  .  .  .  .  .  .  Closing: -
+   120  .  .  .  .  .  .  }
+   121  .  .  .  .  .  .  Results: *ast.FieldList {
+   122  .  .  .  .  .  .  .  Opening: -
+   123  .  .  .  .  .  .  .  List: []*ast.Field (len = 2) {
+   124  .  .  .  .  .  .  .  .  0: *ast.Field {
+   125  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   126  .  .  .  .  .  .  .  .  .  .  NamePos: -
+   127  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   128  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 18)
+   129  .  .  .  .  .  .  .  .  .  }
+   130  .  .  .  .  .  .  .  .  }
+   131  .  .  .  .  .  .  .  .  1: *ast.Field {
+   132  .  .  .  .  .  .  .  .  .  Type: *ast.ArrayType {
+   133  .  .  .  .  .  .  .  .  .  .  Lbrack: -
+   134  .  .  .  .  .  .  .  .  .  .  Elt: *ast.Ident {
+   135  .  .  .  .  .  .  .  .  .  .  .  NamePos: -
+   136  .  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   137  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 18)
+   138  .  .  .  .  .  .  .  .  .  .  }
+   139  .  .  .  .  .  .  .  .  .  }
+   140  .  .  .  .  .  .  .  .  }
+   141  .  .  .  .  .  .  .  }
+   142  .  .  .  .  .  .  .  Closing: -
+   143  .  .  .  .  .  .  }
+   144  .  .  .  .  .  }
+   145  .  .  .  .  }
+   146  .  .  .  }
+   147  .  .  .  Closing: -
+   148  .  .  }
+   149  .  .  Incomplete: false
+   150  .  }
+   151  }

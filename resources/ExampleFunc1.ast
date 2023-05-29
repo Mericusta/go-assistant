@@ -1,0 +1,22 @@
+     0  *ast.FuncDecl {
+     1  .  Name: *ast.Ident {
+     2  .  .  NamePos: -
+     3  .  .  Name: "ExampleFunc1"
+     4  .  .  Obj: *ast.Object {
+     5  .  .  .  Kind: func
+     6  .  .  .  Name: "ExampleFunc1"
+     7  .  .  .  Decl: *(obj @ 0)
+     8  .  .  }
+     9  .  }
+    10  .  Type: *ast.FuncType {
+    11  .  .  Func: -
+    12  .  .  Params: *ast.FieldList {
+    13  .  .  .  Opening: -
+    14  .  .  .  Closing: -
+    15  .  .  }
+    16  .  }
+    17  .  Body: *ast.BlockStmt {
+    18  .  .  Lbrace: -
+    19  .  .  Rbrace: -
+    20  .  }
+    21  }

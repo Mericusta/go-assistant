@@ -3,7 +3,6 @@ package resources
 import (
 	"reflect"
 	"testing"
-	"time"
 )
 
 func Benchmark_ExampleFunc1(b *testing.B) {
@@ -78,6 +77,28 @@ func Benchmark_OneTemplateFunc_6d6d5833d0a567609a6a6de032241d35(b *testing.B) {
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
 			_ = OneTemplateFunc(tt.args.tv)
+		}
+		b.StopTimer()
+		if b.Elapsed() > tt.limit*time.Duration(b.N) {
+			b.Fatalf("overtime limit %v, got %.2f\n", tt.limit, float64(b.Elapsed())/float64(b.N))
+		}
+	}
+}
+
+func Benchmark_DoubleSameTemplateFunc_3b4f7099c4644d92f9dcc05adad31ba6(b *testing.B) {
+	type args struct {
+		tv1 reflect.SliceHeader
+		tv2 reflect.SliceHeader
+	}
+	tests := []struct {
+		name  string
+		limit time.Duration
+		args  args
+	}{}
+	for _, tt := range tests {
+		b.ResetTimer()
+		for i := 0; i < b.N; i++ {
+			_, _ = DoubleSameTemplateFunc(tt.args.tv1, tt.args.tv2)
 		}
 		b.StopTimer()
 		if b.Elapsed() > tt.limit*time.Duration(b.N) {
@@ -257,28 +278,6 @@ func Benchmark_TwoTypeTemplateStruct_KVSlice_f8d79beb910f9b7740f701743544b509(b 
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
 			_, _ = tt.t.KVSlice(tt.args.k, tt.args.v)
-		}
-		b.StopTimer()
-		if b.Elapsed() > tt.limit*time.Duration(b.N) {
-			b.Fatalf("overtime limit %v, got %.2f\n", tt.limit, float64(b.Elapsed())/float64(b.N))
-		}
-	}
-}
-
-func Benchmark_DoubleSameTemplateFunc_3b4f7099c4644d92f9dcc05adad31ba6(b *testing.B) {
-	type args struct {
-		tv1 reflect.SliceHeader
-		tv2 reflect.SliceHeader
-	}
-	tests := []struct {
-		name  string
-		limit time.Duration
-		args  args
-	}{}
-	for _, tt := range tests {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
-			_, _ = DoubleSameTemplateFunc(tt.args.tv1, tt.args.tv2)
 		}
 		b.StopTimer()
 		if b.Elapsed() > tt.limit*time.Duration(b.N) {

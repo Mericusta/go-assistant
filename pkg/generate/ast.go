@@ -2,6 +2,7 @@ package generate
 
 import (
 	"fmt"
+	"reflect"
 	"strings"
 
 	"github.com/Mericusta/go-assistant/pkg/utility"
@@ -25,17 +26,23 @@ func GenerateAST(argFilepath, argIdentType, argIdentNames string) {
 	switch argIdentType {
 	case "func":
 		meta = extractor.SearchGoFunctionMeta(handleFileMeta, argIdentNameSlice[0])
-	case "method":
-		meta = extractor.SearchGoMethodMeta(handleFileMeta, argIdentNameSlice[0], argIdentNameSlice[1])
 	case "struct":
 		meta = extractor.SearchGoStructMeta(handleFileMeta, argIdentNameSlice[0])
 	case "interface":
 		meta = extractor.SearchGoInterfaceMeta(handleFileMeta, argIdentNameSlice[0])
+	case "method":
+		meta = extractor.SearchGoMethodMeta(handleFileMeta, argIdentNameSlice[0], argIdentNameSlice[1])
+		if reflect.ValueOf(meta).IsNil() {
+			_meta := extractor.SearchGoInterfaceMeta(handleFileMeta, argIdentNameSlice[0])
+			if _meta != nil {
+				meta = _meta.SearchMethodDecl(argIdentNameSlice[1])
+			}
+		}
 	default:
 	}
 
-	if meta == nil {
-		fmt.Printf("can not find ident meta\n")
+	if meta == nil || reflect.ValueOf(meta).IsNil() {
+		fmt.Printf("can not find ident %v meta\n", argIdentNames)
 		return
 	}
 

@@ -3,6 +3,7 @@
 go install ./cmd/goass.go
 
 rm ./resources/example_test.go
+rm ./resources/example_benchmark_test.go
 
 goass -cmd=generate -opt=unittest -file=./resources/example.go -func=ExampleFunc1
 goass -cmd=generate -opt=benchmark -file=./resources/example.go -func=ExampleFunc1
@@ -90,3 +91,35 @@ goass -cmd=generate -opt=benchmark -file=./resources/example.go -func=KVSlice -s
 
 grep 'testing\.T' ./resources/example_test.go | wc -l
 grep 'testing\.B' ./resources/example_benchmark_test.go | wc -l
+
+rm ./resources/ExampleFunc1.ast
+rm ./resources/DoubleDifferenceTemplateFunc.ast
+rm ./resources/TypeConstraints.ast
+rm ./resources/ExampleTemplateInterface.ast
+rm ./resources/ExampleTemplateInterface_AnotherExampleFunc.ast
+rm ./resources/OneTypeTemplateStruct.ast
+rm ./resources/TwoTypeTemplateStruct_KVSlice.ast
+
+# func
+echo "func ExampleFunc1"
+goass -cmd=generate -opt=ast -file=./resources/example.go -meta=func -ident=ExampleFunc1 > ./resources/ExampleFunc1.ast
+# generic func
+echo "func DoubleDifferenceTemplateFunc"
+goass -cmd=generate -opt=ast -file=./resources/example.go -meta=func -ident=DoubleDifferenceTemplateFunc > ./resources/DoubleDifferenceTemplateFunc.ast
+# interface(type constraints) not support yet
+echo "interface TypeConstraints not support yet"
+goass -cmd=generate -opt=ast -file=./resources/example.go -meta=interface -ident=TypeConstraints > ./resources/TypeConstraints.ast
+# interface
+echo "interface ExampleTemplateInterface"
+goass -cmd=generate -opt=ast -file=./resources/example.go -meta=interface -ident=ExampleTemplateInterface > ./resources/ExampleTemplateInterface.ast
+# interface method
+echo "method ExampleTemplateInterface.AnotherExampleFunc"
+goass -cmd=generate -opt=ast -file=./resources/example.go -meta=method -ident=ExampleTemplateInterface,AnotherExampleFunc > ./resources/ExampleTemplateInterface_AnotherExampleFunc.ast
+# struct
+echo "struct OneTypeTemplateStruct"
+goass -cmd=generate -opt=ast -file=./resources/example.go -meta=struct -ident=OneTypeTemplateStruct > ./resources/OneTypeTemplateStruct.ast
+# struct method
+echo "method TwoTypeTemplateStruct.KVSlice"
+goass -cmd=generate -opt=ast -file=./resources/example.go -meta=method -ident=TwoTypeTemplateStruct,KVSlice > ./resources/TwoTypeTemplateStruct_KVSlice.ast
+
+ls ./resources/*.ast | wc -l

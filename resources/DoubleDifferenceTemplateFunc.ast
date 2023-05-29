@@ -1,0 +1,141 @@
+     0  *ast.FuncDecl {
+     1  .  Name: *ast.Ident {
+     2  .  .  NamePos: -
+     3  .  .  Name: "DoubleDifferenceTemplateFunc"
+     4  .  .  Obj: *ast.Object {
+     5  .  .  .  Kind: func
+     6  .  .  .  Name: "DoubleDifferenceTemplateFunc"
+     7  .  .  .  Decl: *(obj @ 0)
+     8  .  .  }
+     9  .  }
+    10  .  Type: *ast.FuncType {
+    11  .  .  Func: -
+    12  .  .  TypeParams: *ast.FieldList {
+    13  .  .  .  Opening: -
+    14  .  .  .  List: []*ast.Field (len = 2) {
+    15  .  .  .  .  0: *ast.Field {
+    16  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    17  .  .  .  .  .  .  0: *ast.Ident {
+    18  .  .  .  .  .  .  .  NamePos: -
+    19  .  .  .  .  .  .  .  Name: "T1"
+    20  .  .  .  .  .  .  .  Obj: *ast.Object {
+    21  .  .  .  .  .  .  .  .  Kind: type
+    22  .  .  .  .  .  .  .  .  Name: "T1"
+    23  .  .  .  .  .  .  .  .  Decl: *(obj @ 15)
+    24  .  .  .  .  .  .  .  }
+    25  .  .  .  .  .  .  }
+    26  .  .  .  .  .  }
+    27  .  .  .  .  .  Type: *ast.Ident {
+    28  .  .  .  .  .  .  NamePos: -
+    29  .  .  .  .  .  .  Name: "any"
+    30  .  .  .  .  .  }
+    31  .  .  .  .  }
+    32  .  .  .  .  1: *ast.Field {
+    33  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    34  .  .  .  .  .  .  0: *ast.Ident {
+    35  .  .  .  .  .  .  .  NamePos: -
+    36  .  .  .  .  .  .  .  Name: "T2"
+    37  .  .  .  .  .  .  .  Obj: *ast.Object {
+    38  .  .  .  .  .  .  .  .  Kind: type
+    39  .  .  .  .  .  .  .  .  Name: "T2"
+    40  .  .  .  .  .  .  .  .  Decl: *(obj @ 32)
+    41  .  .  .  .  .  .  .  }
+    42  .  .  .  .  .  .  }
+    43  .  .  .  .  .  }
+    44  .  .  .  .  .  Type: *ast.Ident {
+    45  .  .  .  .  .  .  NamePos: -
+    46  .  .  .  .  .  .  Name: "comparable"
+    47  .  .  .  .  .  }
+    48  .  .  .  .  }
+    49  .  .  .  }
+    50  .  .  .  Closing: -
+    51  .  .  }
+    52  .  .  Params: *ast.FieldList {
+    53  .  .  .  Opening: -
+    54  .  .  .  List: []*ast.Field (len = 2) {
+    55  .  .  .  .  0: *ast.Field {
+    56  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    57  .  .  .  .  .  .  0: *ast.Ident {
+    58  .  .  .  .  .  .  .  NamePos: -
+    59  .  .  .  .  .  .  .  Name: "tv1"
+    60  .  .  .  .  .  .  .  Obj: *ast.Object {
+    61  .  .  .  .  .  .  .  .  Kind: var
+    62  .  .  .  .  .  .  .  .  Name: "tv1"
+    63  .  .  .  .  .  .  .  .  Decl: *(obj @ 55)
+    64  .  .  .  .  .  .  .  }
+    65  .  .  .  .  .  .  }
+    66  .  .  .  .  .  }
+    67  .  .  .  .  .  Type: *ast.Ident {
+    68  .  .  .  .  .  .  NamePos: -
+    69  .  .  .  .  .  .  Name: "T1"
+    70  .  .  .  .  .  .  Obj: *(obj @ 20)
+    71  .  .  .  .  .  }
+    72  .  .  .  .  }
+    73  .  .  .  .  1: *ast.Field {
+    74  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    75  .  .  .  .  .  .  0: *ast.Ident {
+    76  .  .  .  .  .  .  .  NamePos: -
+    77  .  .  .  .  .  .  .  Name: "tv2"
+    78  .  .  .  .  .  .  .  Obj: *ast.Object {
+    79  .  .  .  .  .  .  .  .  Kind: var
+    80  .  .  .  .  .  .  .  .  Name: "tv2"
+    81  .  .  .  .  .  .  .  .  Decl: *(obj @ 73)
+    82  .  .  .  .  .  .  .  }
+    83  .  .  .  .  .  .  }
+    84  .  .  .  .  .  }
+    85  .  .  .  .  .  Type: *ast.Ident {
+    86  .  .  .  .  .  .  NamePos: -
+    87  .  .  .  .  .  .  Name: "T2"
+    88  .  .  .  .  .  .  Obj: *(obj @ 37)
+    89  .  .  .  .  .  }
+    90  .  .  .  .  }
+    91  .  .  .  }
+    92  .  .  .  Closing: -
+    93  .  .  }
+    94  .  .  Results: *ast.FieldList {
+    95  .  .  .  Opening: -
+    96  .  .  .  List: []*ast.Field (len = 2) {
+    97  .  .  .  .  0: *ast.Field {
+    98  .  .  .  .  .  Type: *ast.StarExpr {
+    99  .  .  .  .  .  .  Star: -
+   100  .  .  .  .  .  .  X: *ast.Ident {
+   101  .  .  .  .  .  .  .  NamePos: -
+   102  .  .  .  .  .  .  .  Name: "T1"
+   103  .  .  .  .  .  .  .  Obj: *(obj @ 20)
+   104  .  .  .  .  .  .  }
+   105  .  .  .  .  .  }
+   106  .  .  .  .  }
+   107  .  .  .  .  1: *ast.Field {
+   108  .  .  .  .  .  Type: *ast.StarExpr {
+   109  .  .  .  .  .  .  Star: -
+   110  .  .  .  .  .  .  X: *ast.Ident {
+   111  .  .  .  .  .  .  .  NamePos: -
+   112  .  .  .  .  .  .  .  Name: "T2"
+   113  .  .  .  .  .  .  .  Obj: *(obj @ 37)
+   114  .  .  .  .  .  .  }
+   115  .  .  .  .  .  }
+   116  .  .  .  .  }
+   117  .  .  .  }
+   118  .  .  .  Closing: -
+   119  .  .  }
+   120  .  }
+   121  .  Body: *ast.BlockStmt {
+   122  .  .  Lbrace: -
+   123  .  .  List: []ast.Stmt (len = 1) {
+   124  .  .  .  0: *ast.ReturnStmt {
+   125  .  .  .  .  Return: -
+   126  .  .  .  .  Results: []ast.Expr (len = 2) {
+   127  .  .  .  .  .  0: *ast.Ident {
+   128  .  .  .  .  .  .  NamePos: -
+   129  .  .  .  .  .  .  Name: "nil"
+   130  .  .  .  .  .  }
+   131  .  .  .  .  .  1: *ast.Ident {
+   132  .  .  .  .  .  .  NamePos: -
+   133  .  .  .  .  .  .  Name: "nil"
+   134  .  .  .  .  .  }
+   135  .  .  .  .  }
+   136  .  .  .  }
+   137  .  .  }
+   138  .  .  Rbrace: -
+   139  .  }
+   140  }
