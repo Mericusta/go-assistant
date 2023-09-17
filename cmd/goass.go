@@ -6,6 +6,7 @@ import (
 	"github.com/Mericusta/go-assistant/pkg/generate"
 	"github.com/Mericusta/go-assistant/pkg/infer"
 	"github.com/Mericusta/go-assistant/pkg/search"
+	"github.com/Mericusta/go-assistant/pkg/secret"
 )
 
 var (
@@ -33,6 +34,10 @@ var (
 
 	// search var
 	argRegexp = flag.String("regexp", "", "content regexp which contains search key, must like (?P<KEY>regexp)")
+
+	// secret var
+	argSecretInputFile  = flag.String("input", "", "secret input file")
+	argSecretOutputFile = flag.String("output", "", "secret output file")
 )
 
 func init() {
@@ -51,5 +56,7 @@ func main() {
 		infer.InferTheOptimalLayoutOfStructMemory(*argPlatform, *argFilepath, *argStructName, *argAllocationPreview, *argProcess)
 	case *command == "search" && *option == "log":
 		search.SplitLogByKey(*argFilepath, *argMode, *argRegexp)
+	case *command == "secret":
+		secret.MakeASecret(*option, *argSecretInputFile, *argSecretOutputFile)
 	}
 }
