@@ -7,9 +7,14 @@ import (
 	"github.com/Mericusta/go-assistant/pkg/infer"
 	"github.com/Mericusta/go-assistant/pkg/search"
 	"github.com/Mericusta/go-assistant/pkg/secret"
+
+	"github.com/rivo/tview"
 )
 
 var (
+	// temp var
+	dev = flag.Bool("dev", false, "use dev UI assistant")
+
 	// command var
 	command = flag.String("cmd", "", "command")
 	option  = flag.String("opt", "", "command option")
@@ -45,6 +50,14 @@ func init() {
 }
 
 func main() {
+	if *dev {
+		mainForDevUI()
+	} else {
+		mainForCommand()
+	}
+}
+
+func mainForCommand() {
 	switch {
 	case *command == "generate" && *option == "unittest":
 		generate.GenerateUnittest(*argFilepath, *argFuncName, *argStructName, *argInterfaceName, *argTypeArgs, *argMode, *args)
@@ -56,7 +69,14 @@ func main() {
 		infer.InferTheOptimalLayoutOfStructMemory(*argPlatform, *argFilepath, *argStructName, *argAllocationPreview, *argProcess)
 	case *command == "search" && *option == "log":
 		search.SplitLogByKey(*argFilepath, *argMode, *argRegexp)
-	case *command == "secret":
-		secret.MakeASecret(*option, *argSecretInputFile, *argSecretOutputFile)
+	case *command == "secret" && *option == "encode":
+		secret.Encode(*argSecretInputFile, *argSecretOutputFile, *argMode, *args, *argRegexp)
+	}
+}
+
+func mainForDevUI() {
+	box := tview.NewBox().SetBorder(true).SetTitle("Hello, world!")
+	if err := tview.NewApplication().SetRoot(box, true).Run(); err != nil {
+		panic(err)
 	}
 }

@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	stpfile "github.com/Mericusta/go-stp/file"
+	"github.com/Mericusta/go-stp"
 )
 
 func SplitLogByKey(argFilepath, argMode, argRegexp string) {
@@ -32,7 +32,7 @@ func SplitLogByKey(argFilepath, argMode, argRegexp string) {
 
 	var wg sync.WaitGroup
 	keyMap := make(map[string]chan string)
-	stpfile.ReadFileLineOneByOne(argFilepath, func(s string) bool {
+	stp.ReadFileLineOneByOne(argFilepath, func(s string, l int) bool {
 		if keyRegexp.MatchString(s) {
 			submatchSlice := keyRegexp.FindStringSubmatch(s)
 			if submatchKeyIndex >= len(submatchSlice) {
