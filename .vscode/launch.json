@@ -15,8 +15,8 @@
                 "-opt=encode",
                 "-arg=go",
                 "-regexp=\\w+_test",
-                "-input=../resources",
-                "-output=../resources/resources_go_encode"
+                "-input=../resources/resources_go_encode",
+                "-output=../resources/resources_go_decode"
             ]
         },
         {

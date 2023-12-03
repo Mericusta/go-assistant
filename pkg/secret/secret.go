@@ -2,6 +2,8 @@ package secret
 
 import (
 	"bufio"
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -14,47 +16,7 @@ import (
 
 const uint8Max = 255
 
-// func MakeASecret(operation, inputFilePath, outputFilePath string) {
-// 	if inputFilePath == "" {
-// 		fmt.Println("ERROR: input file required")
-// 		return
-// 	}
-// 	if outputFilePath == "" {
-// 		fmt.Println("ERROR: output file required")
-// 		return
-// 	}
-
-// 	inputFile, osOpenError := os.Open(inputFilePath)
-// 	if osOpenError != nil {
-// 		fmt.Printf("open file %v occurs error, %v\n", inputFile, osOpenError)
-// 		return
-// 	}
-
-// 	outputFile, osCreateError := os.Create(outputFilePath)
-// 	if osCreateError != nil {
-// 		fmt.Printf("create %v error, %v", outputFilePath, osCreateError)
-// 		return
-// 	}
-
-// 	operationResult := true
-
-// 	if operation == "encode" {
-// 		// operationResult = encode(inputFile, outputFile)
-// 	} else if operation == "decode" {
-// 		// operationResult = decode(inputFile, outputFile)
-// 	} else {
-// 		fmt.Printf("unknown operation %v\n", operation)
-// 		return
-// 	}
-
-// 	if operationResult {
-// 		fmt.Printf("NOTE: %v successfully\n", operation)
-// 	} else {
-// 		fmt.Printf("NOTE: %v failed\n", operation)
-// 	}
-// }
-
-func Encode(inputPath, outputPath, outputMode, args, argRegexpExpression string) {
+func Secret(inputPath, outputPath, outputMode, args, argRegexpExpression string) {
 	if len(inputPath) == 0 {
 		fmt.Println("ERROR: input path required")
 		return
@@ -66,10 +28,12 @@ func Encode(inputPath, outputPath, outputMode, args, argRegexpExpression string)
 			return
 		}
 		outputPathStat, err := os.Stat(outputPath)
-		// if err != nil && ! {
-		// 	return
-		// }
-		if outputPathStat.IsDir() {
+		notExist := os.IsNotExist(err)
+		if !notExist && err != nil {
+			fmt.Println("ERROR: get output path stat occurs error,", err.Error())
+			return
+		}
+		if outputPathStat != nil && outputPathStat.IsDir() {
 			fmt.Println("ERROR: output path is directory")
 			return
 		}
@@ -81,7 +45,7 @@ func Encode(inputPath, outputPath, outputMode, args, argRegexpExpression string)
 		return
 	}
 
-	toEncodeFilePathSlice := make([]string, 0, 8)
+	toEncodeContentBytesReader := bytes.NewBuffer(make([]byte, 0, 1024))
 	if inputPathStat.IsDir() {
 		if len(args) == 0 {
 			fmt.Println("ERROR: input path is directory, need file extend name")
@@ -109,6 +73,7 @@ func Encode(inputPath, outputPath, outputMode, args, argRegexpExpression string)
 			fmt.Println("ERROR: read directory occurs error,", err.Error())
 			return
 		}
+		toEncodeFileBytesMap := make(map[string][]byte)
 		for _, fe := range dirEntry {
 			name := fe.Name()
 			if fe.IsDir() || !extendedSlice.Includes(filepath.Ext(name)) {
@@ -120,44 +85,58 @@ func Encode(inputPath, outputPath, outputMode, args, argRegexpExpression string)
 					continue
 				}
 			}
-			fmt.Println("TODO: to encode file", name)
 			toEncodeFilePath := filepath.Join(inputPath, name)
-			toEncodeFilePathSlice = append(toEncodeFilePathSlice, toEncodeFilePath)
+			contentBytes, err := os.ReadFile(toEncodeFilePath)
+			if err != nil {
+				fmt.Println("ERROR: read file", toEncodeFilePath, "occurs error", err.Error())
+				continue
+			}
+			if len(contentBytes) == 0 {
+				continue
+			}
+			toEncodeFileBytesMap[toEncodeFilePath] = contentBytes
 		}
+		toEncodeDirectoryJSON, err := json.Marshal(toEncodeFileBytesMap)
+		if err != nil {
+			fmt.Println("ERROR: json marshal to encode directory", inputPath, "occurs error", err.Error())
+			return
+		}
+		toEncodeContentBytesReader.Write(toEncodeDirectoryJSON)
 	} else {
-
-	}
-
-	handleReaderMap := make(map[string]io.Reader)
-	handleWriterMap := make(map[string]io.Writer)
-	for _, toEncodeFilePath := range toEncodeFilePathSlice {
-		f, err := os.Open(toEncodeFilePath)
-		if f == nil || err != nil {
-			fmt.Println("ERROR: open file", toEncodeFilePath, "occurs error", err.Error())
-			continue
+		contentBytes, err := os.ReadFile(inputPath)
+		if err != nil {
+			fmt.Println("ERROR: read file", inputPath, "occurs error", err.Error())
+			return
 		}
-		handleReaderMap[toEncodeFilePath] = f
-		// handleWriterMap[toEncodeFilePath] = bytes.NewBuffer(make([]byte, 0, 1024))
-		handleWriterMap[toEncodeFilePath] = os.Stdout
+		if len(contentBytes) == 0 {
+			fmt.Println("ERROR: read file", inputPath, "but get empty")
+			return
+		}
+		toEncodeContentBytesReader.Write(contentBytes)
 	}
 
-	// for toEncodeFilePath, toEncodeFileReader := range handleReaderMap {
-	// 	toEncodeFileWriter := handleWriterMap[toEncodeFilePath]
-	// 	err = secretHandler(toEncodeFileReader, toEncodeFileWriter)
-	// 	if err != nil {
-	// 		fmt.Println("ERROR: encode file", toEncodeFilePath, "occurs error", err.Error())
-	// 		continue
-	// 	}
-	// }
+	var toEncodeContentBytesWriter io.Writer
+	switch outputMode {
+	case "append":
+		toEncodeContentBytesWriter, err = os.OpenFile(outputPath, os.O_CREATE|os.O_APPEND|os.O_RDWR, 0644)
+		if err != nil {
+			fmt.Println("ERROR: open file", outputPath, "occurs error,", err.Error())
+			return
+		}
+	case "replace":
+		toEncodeContentBytesWriter, err = os.OpenFile(outputPath, os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0644)
+		if err != nil {
+			fmt.Println("ERROR: open file", outputPath, "occurs error,", err.Error())
+		}
+	default:
+		toEncodeContentBytesWriter = os.Stdout
+	}
 
-	// switch outputMode {
-	// case "replace", "append":
-
-	// default:
-	// 	for toEncodeFilePath, toEncodeFileWriter := range handleWriterMap {
-	// 		fmt.Println("TODO: file", toEncodeFilePath, toEncodeFileWriter.(*bytes.Buffer).Bytes())
-	// 	}
-	// }
+	err = secretHandler(toEncodeContentBytesReader, toEncodeContentBytesWriter)
+	if err != nil {
+		fmt.Println("ERROR: handle content bytes occurs error", err.Error())
+		return
+	}
 }
 
 func secretHandler(toHandleContentReader io.Reader, resultContentWriter io.Writer) (err error) {

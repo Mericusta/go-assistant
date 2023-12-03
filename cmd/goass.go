@@ -69,8 +69,8 @@ func mainForCommand() {
 		infer.InferTheOptimalLayoutOfStructMemory(*argPlatform, *argFilepath, *argStructName, *argAllocationPreview, *argProcess)
 	case *command == "search" && *option == "log":
 		search.SplitLogByKey(*argFilepath, *argMode, *argRegexp)
-	case *command == "secret" && *option == "encode":
-		secret.Encode(*argSecretInputFile, *argSecretOutputFile, *argMode, *args, *argRegexp)
+	case *command == "generate" && *option == "secret":
+		secret.Secret(*argSecretInputFile, *argSecretOutputFile, *argMode, *args, *argRegexp)
 	}
 }
 
