@@ -76,7 +76,7 @@ func mainForCommand() {
 		search.SplitLogByKey(*argFilepath, *argMode, *argRegexp)
 	case *command == "generate" && *option == "secret":
 		secret.Secret(*argSecretInputFile, *argSecretOutputFile, *argMode, *args, *argRegexp)
-	case *command == "operate" && *argSource == "argSource":
+	case *command == "operate" && *argSource == "redis":
 		operate.OperateRedis(*argURL, *option, *argRegexp)
 	}
 }

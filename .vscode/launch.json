@@ -11,12 +11,11 @@
             "mode": "auto",
             "program": "${fileDirname}",
             "args": [
-                "-cmd=secret",
-                "-opt=encode",
-                "-arg=go",
-                "-regexp=\\w+_test",
-                "-input=../resources/resources_go_encode",
-                "-output=../resources/resources_go_decode"
+                "-cmd=operate",
+                "-source=redis",
+                "-url=cluster://:@192.168.2.158:7001",
+                "-opt=keys",
+                "-regexp=liyunpeng_dev_local_Data_*",
             ]
         },
         {

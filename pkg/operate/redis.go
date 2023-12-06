@@ -4,9 +4,18 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"strings"
 
 	"github.com/go-redis/redis/v8"
 )
+
+func redisCommandExecuteError(cmd string, err error, args ...string) string {
+	return fmt.Sprintf("ERROR: execute command '%v %v' occurs error, %v", cmd, strings.Join(args, " "), err.Error())
+}
+
+func redisCommandExecuteResult[T any](cmd string, result T, args ...string) string {
+	return fmt.Sprintf("INFO: execute command '%v %v' result, %v", cmd, strings.Join(args, " "), result)
+}
 
 func connect(urlString string) (redis.Cmdable, error) {
 	url, err := url.Parse(urlString)
@@ -58,7 +67,12 @@ func OperateRedis(argURL, option, argRegexp string) {
 
 	matchKeySlice, err := rdb.Keys(context.Background(), argRegexp).Result()
 	if err != nil {
-		fmt.Println("ERROR: execute command 'keys '", argRegexp, "'occurs error", err.Error())
+		fmt.Println(redisCommandExecuteError("keys", err, argRegexp))
+		return
+	}
+
+	if len(matchKeySlice) == 0 {
+		fmt.Println(redisCommandExecuteResult("keys", matchKeySlice, argRegexp))
 		return
 	}
 
@@ -67,17 +81,19 @@ func OperateRedis(argURL, option, argRegexp string) {
 		case "del":
 			result, err := rdb.Del(context.Background(), key).Result()
 			if err != nil {
-				fmt.Println("ERROR: execute command 'del", key, "' occurs error,", err.Error())
+				fmt.Println(redisCommandExecuteError("del", err, key))
 				return
 			}
-			fmt.Println("INFO: execute command 'del", key, "' result", result)
+			fmt.Println(redisCommandExecuteResult("del", result, key))
 		case "hgetall":
 			result, err := rdb.HGetAll(context.Background(), key).Result()
 			if err != nil {
-				fmt.Println("ERROR: execute command 'hgetall", key, "' occurs error,", err.Error())
+				fmt.Println(redisCommandExecuteError("hgetall", err, key))
 				return
 			}
-			fmt.Println("INFO: execute command 'hgetall", key, "' result", result)
+			fmt.Println(redisCommandExecuteResult("hgetall", result, key))
+		default:
+			fmt.Println(redisCommandExecuteResult("keys", matchKeySlice, argRegexp))
 		}
 	}
 }
