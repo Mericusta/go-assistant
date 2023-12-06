@@ -5,6 +5,7 @@ import (
 
 	"github.com/Mericusta/go-assistant/pkg/generate"
 	"github.com/Mericusta/go-assistant/pkg/infer"
+	"github.com/Mericusta/go-assistant/pkg/operate"
 	"github.com/Mericusta/go-assistant/pkg/search"
 	"github.com/Mericusta/go-assistant/pkg/secret"
 
@@ -43,6 +44,10 @@ var (
 	// secret var
 	argSecretInputFile  = flag.String("input", "", "secret input file")
 	argSecretOutputFile = flag.String("output", "", "secret output file")
+
+	// redis/mysql var
+	argSource = flag.String("source", "", "operate source: redis, mysql")
+	argURL    = flag.String("url", "", "url")
 )
 
 func init() {
@@ -71,6 +76,8 @@ func mainForCommand() {
 		search.SplitLogByKey(*argFilepath, *argMode, *argRegexp)
 	case *command == "generate" && *option == "secret":
 		secret.Secret(*argSecretInputFile, *argSecretOutputFile, *argMode, *args, *argRegexp)
+	case *command == "operate" && *argSource == "argSource":
+		operate.OperateRedis(*argURL, *option, *argRegexp)
 	}
 }
 
