@@ -11,11 +11,10 @@
             "mode": "auto",
             "program": "${fileDirname}",
             "args": [
-                "-cmd=operate",
-                "-source=redis",
-                "-url=cluster://:@192.168.2.158:7001",
-                "-opt=keys",
-                "-regexp=liyunpeng_dev_local_Data_*",
+                "-cmd=replace",
+                "-meta=func",
+                "-ident=ReplaceFunc",
+                "-arg=../resources/replace_from/replace_from.go,../resources/replace_to/replace_to.go",
             ]
         },
         {

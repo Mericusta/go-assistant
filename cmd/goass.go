@@ -6,6 +6,7 @@ import (
 	"github.com/Mericusta/go-assistant/pkg/generate"
 	"github.com/Mericusta/go-assistant/pkg/infer"
 	"github.com/Mericusta/go-assistant/pkg/operate"
+	"github.com/Mericusta/go-assistant/pkg/replace"
 	"github.com/Mericusta/go-assistant/pkg/search"
 	"github.com/Mericusta/go-assistant/pkg/secret"
 
@@ -78,6 +79,8 @@ func mainForCommand() {
 		secret.Secret(*argSecretInputFile, *argSecretOutputFile, *argMode, *args, *argRegexp)
 	case *command == "operate" && *argSource == "redis":
 		operate.OperateRedis(*argURL, *option, *argRegexp)
+	case *command == "replace":
+		replace.ReplaceCode(*argMetaType, *argMetaIdent, *argRegexp, *args)
 	}
 }
 
