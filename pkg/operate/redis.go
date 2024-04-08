@@ -10,11 +10,11 @@ import (
 )
 
 func redisCommandExecuteError(cmd string, err error, args ...string) string {
-	return fmt.Sprintf("ERROR: execute command '%v %v' occurs error, %v", cmd, strings.Join(args, " "), err.Error())
+	return fmt.Sprint("ERROR: execute command '", cmd, strings.Join(args, " "), "' occurs error, ", err.Error())
 }
 
 func redisCommandExecuteResult[T any](cmd string, result T, args ...string) string {
-	return fmt.Sprintf("INFO: execute command '%v %v' result, %v", cmd, strings.Join(args, " "), result)
+	return fmt.Sprint("INFO: execute command '", cmd, strings.Join(args, " "), "' result, ", result)
 }
 
 func connectRedis(urlString string) (redis.Cmdable, error) {
@@ -78,20 +78,43 @@ func OperateRedis(argURL, option, argRegexp string) {
 
 	for _, key := range matchKeySlice {
 		switch option {
-		case "del":
-			result, err := rdb.Del(context.Background(), key).Result()
-			if err != nil {
-				fmt.Println(redisCommandExecuteError("del", err, key))
+		case "del", "hgetall":
+			var cmd *redis.Cmd
+			switch rdb := rdb.(type) {
+			case *redis.Client:
+				cmd = rdb.Do(context.Background(), option, key)
+			case *redis.ClusterClient:
+				cmd = rdb.Do(context.Background(), option, key)
+			}
+			if cmd == nil {
+				fmt.Println(redisCommandExecuteError(option, err, key))
 				return
 			}
-			fmt.Println(redisCommandExecuteResult("del", result, key))
-		case "hgetall":
-			result, err := rdb.HGetAll(context.Background(), key).Result()
+			result, err := cmd.Result()
 			if err != nil {
-				fmt.Println(redisCommandExecuteError("hgetall", err, key))
+				fmt.Println(redisCommandExecuteError(option, err, key))
 				return
 			}
-			fmt.Println(redisCommandExecuteResult("hgetall", result, key))
+			fmt.Println(redisCommandExecuteResult(option, result, key))
+		case "dbsize", "flushdb", "flushall":
+			var cmd *redis.Cmd
+			switch rdb := rdb.(type) {
+			case *redis.Client:
+				cmd = rdb.Do(context.Background(), option)
+			case *redis.ClusterClient:
+				cmd = rdb.Do(context.Background(), option)
+			}
+			if cmd == nil {
+				fmt.Println(redisCommandExecuteError(option, err))
+				return
+			}
+			result, err := cmd.Result()
+			if err != nil {
+				fmt.Println(redisCommandExecuteError(option, err))
+				return
+			}
+			fmt.Println(redisCommandExecuteResult(option, result))
+			return
 		default:
 			fmt.Println(redisCommandExecuteResult("keys", matchKeySlice, argRegexp))
 		}

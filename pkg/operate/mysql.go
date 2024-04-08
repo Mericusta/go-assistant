@@ -9,9 +9,9 @@ import (
 	"github.com/go-sql-driver/mysql"
 )
 
-var (
-	SQL_QUERY_ERROR_FORMAT = "ERROR: execute SQL query occurs error,"
-)
+func mysqlExecuteError(cmd string, err error) string {
+	return fmt.Sprintf("ERROR: execute SQL query '%v' occurs error, %v", cmd, err.Error())
+}
 
 func connectMySQL(urlString string) (*sql.DB, error) {
 	mysqlCfg, err := mysql.ParseDSN(urlString)
@@ -49,7 +49,7 @@ func importToMySQL(dbSession *sql.DB, sqlFilePath string) {
 	err := stp.ReadFileLineOneByOne(sqlFilePath, func(s string, l int) bool {
 		_, err := dbSession.Exec(s)
 		if err != nil {
-			fmt.Println(SQL_QUERY_ERROR_FORMAT, err.Error())
+			fmt.Println(mysqlExecuteError(s, err))
 		} else {
 			fmt.Println("INFO: executed SQL,", s)
 		}
@@ -65,7 +65,7 @@ func truncateMySQL(dbSession *sql.DB, tables ...string) {
 		truncateSQL := fmt.Sprintf("truncate `%v`;", table)
 		_, err := dbSession.Exec(truncateSQL)
 		if err != nil {
-			fmt.Println(SQL_QUERY_ERROR_FORMAT, err.Error())
+			fmt.Println(mysqlExecuteError(truncateSQL, err))
 		} else {
 			fmt.Println("INFO: executed SQL,", truncateSQL)
 		}
