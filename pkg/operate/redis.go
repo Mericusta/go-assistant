@@ -17,7 +17,7 @@ func redisCommandExecuteResult[T any](cmd string, result T, args ...string) stri
 	return fmt.Sprintf("INFO: execute command '%v %v' result, %v", cmd, strings.Join(args, " "), result)
 }
 
-func connect(urlString string) (redis.Cmdable, error) {
+func connectRedis(urlString string) (redis.Cmdable, error) {
 	url, err := url.Parse(urlString)
 	if err != nil {
 		return nil, err
@@ -59,7 +59,7 @@ func connect(urlString string) (redis.Cmdable, error) {
 }
 
 func OperateRedis(argURL, option, argRegexp string) {
-	rdb, err := connect(argURL)
+	rdb, err := connectRedis(argURL)
 	if err != nil {
 		fmt.Println("ERROR: connect redis with url", argURL, "occurs error,", err.Error())
 		return

@@ -79,6 +79,8 @@ func mainForCommand() {
 		secret.Secret(*argSecretInputFile, *argSecretOutputFile, *argMode, *args, *argRegexp)
 	case *command == "operate" && *argSource == "redis":
 		operate.OperateRedis(*argURL, *option, *argRegexp)
+	case *command == "operate" && *argSource == "mysql":
+		operate.OperateMySQL(*argURL, *option, *argFilepath, *args)
 	case *command == "replace":
 		replace.ReplaceCode(*argMetaType, *argMetaIdent, *argRegexp, *args)
 	}
