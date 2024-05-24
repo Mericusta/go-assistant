@@ -9,12 +9,14 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${fileDirname}",
+            "program": "${workspaceFolder}/cmd/goass.go",
             "args": [
-                "-cmd=replace",
+                "-cmd=generate",
+                "-opt=ast",
+                "-file=${workspaceFolder}/pkg/generate/ast.go",
                 "-meta=func",
-                "-ident=ReplaceFunc",
-                "-arg=../resources/replace_from/replace_from.go,../resources/replace_to/replace_to.go",
+                "-ident=GenerateAST",
+                "-arg=GenerateAST.json"
             ]
         },
         {
@@ -22,7 +24,7 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${fileDirname}",
+            "program": "${workspaceFolder}/cmd/goass.go",
             "args": [
                 "-dev=true",
             ]
