@@ -11,12 +11,11 @@
             "mode": "auto",
             "program": "${workspaceFolder}/cmd/goass.go",
             "args": [
-                "-cmd=generate",
-                "-opt=ast",
-                "-file=${workspaceFolder}/pkg/generate/ast.go",
-                "-meta=func",
-                "-ident=GenerateAST",
-                "-arg=GenerateAST.json"
+                "-cmd=operate",
+                "-source=markdown",
+                "-opt=clear",
+                "-file=${workspaceFolder}/resources/example.md",
+                "-arg=3,27,1,-2"
             ]
         },
         {

@@ -39,3 +39,9 @@ func HandleFileMeta(argFilepath string) *extractor.GoFileMeta {
 
 	return gfm
 }
+
+func PanicError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}

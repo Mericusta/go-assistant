@@ -81,6 +81,8 @@ func mainForCommand() {
 		operate.OperateRedis(*argURL, *option, *argRegexp)
 	case *command == "operate" && *argSource == "mysql":
 		operate.OperateMySQL(*argURL, *option, *argFilepath, *args)
+	case *command == "operate" && *argSource == "markdown":
+		operate.OperateMarkdownTable(*option, *argFilepath, *args)
 	case *command == "replace":
 		replace.ReplaceCode(*argMetaType, *argMetaIdent, *argRegexp, *args)
 	}
