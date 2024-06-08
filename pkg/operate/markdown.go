@@ -48,22 +48,22 @@ func (mt *markdownTable) clear() {
 	}
 }
 
-func OperateMarkdownTable(option, argFilepath, args string) {
+func OperateMarkdownTable(argOption, argFilepath, args string) {
 	markdownFile, err := os.Open(argFilepath)
 	utility.PanicError(err)
 
-	tableContentLineSlice := strings.Split(args, ",")
-	if len(tableContentLineSlice) < 2 {
+	argSlice := strings.Split(args, ",")
+	if len(argSlice) < 2 {
 		utility.PanicError(fmt.Errorf("no table content line"))
 	}
 
-	tableBeginLine, err := strconv.Atoi(tableContentLineSlice[0])
+	tableBeginLine, err := strconv.Atoi(argSlice[0])
 	utility.PanicError(err)
-	tableEndLine, err := strconv.Atoi(tableContentLineSlice[1])
+	tableEndLine, err := strconv.Atoi(argSlice[1])
 	utility.PanicError(err)
 	keywordColumnIndexSlice := make([]int, 0, 4)
-	for index := 2; index < len(tableContentLineSlice); index++ {
-		keywordColumn, err := strconv.Atoi(tableContentLineSlice[index])
+	for index := 2; index < len(argSlice); index++ {
+		keywordColumn, err := strconv.Atoi(argSlice[index])
 		utility.PanicError(err)
 		switch {
 		case keywordColumn > 0:
@@ -85,7 +85,6 @@ func OperateMarkdownTable(option, argFilepath, args string) {
 		case i+1 > tableEndLine:
 			return false
 		}
-		fmt.Printf("|%v|\n", s)
 		tableRow := &markdownTableRow{}
 		tableRow.content = s
 		tableRow.line = i + 1
@@ -102,7 +101,6 @@ func OperateMarkdownTable(option, argFilepath, args string) {
 		default:
 			table.rows = append(table.rows, tableRow)
 		}
-		fmt.Printf("%+v\n", tableRow)
 		return true
 	})
 	utility.PanicError(err)
@@ -114,7 +112,7 @@ func OperateMarkdownTable(option, argFilepath, args string) {
 		}
 	})
 
-	switch option {
+	switch argOption {
 	case "clear":
 		table.clear()
 	}

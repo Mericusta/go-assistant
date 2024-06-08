@@ -69,6 +69,8 @@ func mainForCommand() {
 		generate.GenerateUnittest(*argFilepath, *argFuncName, *argStructName, *argInterfaceName, *argTypeArgs, *argMode, *args)
 	case *command == "generate" && *option == "benchmark":
 		generate.GenerateBenchmark(*argFilepath, *argFuncName, *argStructName, *argInterfaceName, *argTypeArgs, *argMode, *args)
+	case *command == "generate" && *option == "implement":
+		generate.GenerateImplement(*argFilepath, *argInterfaceName, *argMetaIdent, *argTypeArgs, *args)
 	case *command == "generate" && *option == "ast":
 		generate.GenerateAST(*argFilepath, *argMetaType, *argMetaIdent)
 	case *command == "infer" && *option == "allocation":

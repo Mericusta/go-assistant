@@ -5,8 +5,8 @@ go 1.22
 toolchain go1.22.3
 
 require (
-	github.com/Mericusta/go-extractor v0.7.5
-	github.com/Mericusta/go-stp v0.8.13
+	github.com/Mericusta/go-extractor v0.8.4
+	github.com/Mericusta/go-stp v0.8.15
 	github.com/charmbracelet/bubbletea v0.26.3
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-sql-driver/mysql v1.8.1

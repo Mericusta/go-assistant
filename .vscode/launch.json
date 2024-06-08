@@ -11,11 +11,13 @@
             "mode": "auto",
             "program": "${workspaceFolder}/cmd/goass.go",
             "args": [
-                "-cmd=operate",
-                "-source=markdown",
-                "-opt=clear",
-                "-file=${workspaceFolder}/resources/example.md",
-                "-arg=3,27,1,-2"
+                "-cmd=generate",
+                "-opt=implement",
+                "-file=${workspaceFolder}/resources/game.grpc_grpc.pb.go",
+                "-interface=GameServiceServer",
+                "-ident=s",
+                "-types=Service",
+                "-arg=${workspaceFolder}/resources/res.go",
             ]
         },
         {
