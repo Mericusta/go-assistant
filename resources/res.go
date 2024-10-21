@@ -16,8 +16,7 @@ import (
 	"golang.org/x/net/context"
 )
 
-// TODO: Player 层的 handler
-func (s *Service) ChangePlayerName(c context.Context, req *game.CChangePlayerName) (res *game.SChangePlayerName, err error) {
+func (s *Service) ChangePlayerName(p0 Context, p1 *CChangePlayerName) (*SChangePlayerName, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("ChangePlayerName on goroutine %v\n", goroutineID)
 	s.player.IdentifyComponent().SetName(req.GetName())
@@ -27,8 +26,7 @@ func (s *Service) ChangePlayerName(c context.Context, req *game.CChangePlayerNam
 	return
 }
 
-// TODO: Player 层的 handler
-func (s *Service) CheckTime(iContext context.Context, req *game.CCheckTime) (res *game.SCheckTime, err error) {
+func (s *Service) CheckTime(p0 Context, p1 *CCheckTime) (*SCheckTime, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("CheckTime on goroutine %v\n", goroutineID)
 	res = &game.SCheckTime{}
@@ -37,8 +35,7 @@ func (s *Service) CheckTime(iContext context.Context, req *game.CCheckTime) (res
 	return res, nil
 }
 
-// TODO: Player 层的 handler
-func (s *Service) GetCumulativeLoginDays(iContext context.Context, req *game.CGetCumulativeLoginDays) (res *game.SGetCumulativeLoginDays, err error) {
+func (s *Service) GetCumulativeLoginDays(p0 Context, p1 *CGetCumulativeLoginDays) (*SGetCumulativeLoginDays, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("GetCumulativeLoginDays on goroutine %v\n", goroutineID)
 	res = &game.SGetCumulativeLoginDays{}
@@ -46,8 +43,7 @@ func (s *Service) GetCumulativeLoginDays(iContext context.Context, req *game.CGe
 	return res, nil
 }
 
-// TODO: Player 层的 handler
-func (s *Service) GetDiamondCount(iContext context.Context, req *game.CGetDiamondCount) (res *game.SGetDiamondCount, err error) {
+func (s *Service) GetDiamondCount(p0 Context, p1 *CGetDiamondCount) (*SGetDiamondCount, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("GetDiamondCount on goroutine %v\n", goroutineID)
 	res = &game.SGetDiamondCount{}
@@ -55,8 +51,7 @@ func (s *Service) GetDiamondCount(iContext context.Context, req *game.CGetDiamon
 	return res, nil
 }
 
-// TODO: Player 层的 handler
-func (s *Service) GetEnergyData(ctx context.Context, req *game.CGetEnergyData) (res *game.SGetEnergyData, err error) {
+func (s *Service) GetEnergyData(p0 Context, p1 *CGetEnergyData) (*SGetEnergyData, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("GetEnergyData on goroutine %v\n", goroutineID)
 	res = &game.SGetEnergyData{}
@@ -65,8 +60,7 @@ func (s *Service) GetEnergyData(ctx context.Context, req *game.CGetEnergyData) (
 	return res, nil
 }
 
-// TODO: Player 层的 handler
-func (s *Service) GetGoldCount(ctx context.Context, req *game.CGetGoldCount) (res *game.SGetGoldCount, err error) {
+func (s *Service) GetGoldCount(p0 Context, p1 *CGetGoldCount) (*SGetGoldCount, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("GetGoldCount on goroutine %v\n", goroutineID)
 	res = &game.SGetGoldCount{}
@@ -74,8 +68,7 @@ func (s *Service) GetGoldCount(ctx context.Context, req *game.CGetGoldCount) (re
 	return res, nil
 }
 
-// TODO: Player 层的 handler
-func (s *Service) GetLevelExp(ctx context.Context, req *game.CGetLevelExp) (res *game.SGetLevelExp, err error) {
+func (s *Service) GetLevelExp(p0 Context, p1 *CGetLevelExp) (*SGetLevelExp, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("GetLevelExp on goroutine %v\n", goroutineID)
 	res = &game.SGetLevelExp{}
@@ -83,8 +76,7 @@ func (s *Service) GetLevelExp(ctx context.Context, req *game.CGetLevelExp) (res 
 	return res, nil
 }
 
-// TODO: Player 层的 handler
-func (s *Service) GetMaterials(ctx context.Context, req *game.CGetMaterials) (res *game.SGetMaterials, err error) {
+func (s *Service) GetMaterials(p0 Context, p1 *CGetMaterials) (*SGetMaterials, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("GetMaterials on goroutine %v\n", goroutineID)
 	res = &game.SGetMaterials{}
@@ -93,18 +85,15 @@ func (s *Service) GetMaterials(ctx context.Context, req *game.CGetMaterials) (re
 	return res, nil
 }
 
-// TODO: Player 层的 handler
-func (s *Service) GetOrderList(ctx context.Context, req *game.CGetOrderList) (res *game.SGetOrderList, err error) {
+func (s *Service) GetOrderList(p0 Context, p1 *CGetOrderList) (*SGetOrderList, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("GetOrderList on goroutine %v\n", goroutineID)
 	res = &game.SGetOrderList{}
 	res.OrderList = make(map[int64]*models.PBSingleOrder)
-	// TODO:
 	return res, nil
 }
 
-// TODO: Player 层的 handler
-func (s *Service) GetPlayerName(c context.Context, req *game.CGetPlayerName) (res *game.SGetPlayerName, err error) {
+func (s *Service) GetPlayerName(p0 Context, p1 *CGetPlayerName) (*SGetPlayerName, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("GetPlayerName on goroutine %v\n", goroutineID)
 	res = &game.SGetPlayerName{}
@@ -112,8 +101,7 @@ func (s *Service) GetPlayerName(c context.Context, req *game.CGetPlayerName) (re
 	return
 }
 
-// TODO: Player 层的 handler
-func (s *Service) GetProfile(ctx context.Context, req *game.CGetProfile) (res *game.SGetProfile, err error) {
+func (s *Service) GetProfile(p0 Context, p1 *CGetProfile) (*SGetProfile, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("GetProfile on goroutine %v\n", goroutineID)
 	res = &game.SGetProfile{}
@@ -121,8 +109,7 @@ func (s *Service) GetProfile(ctx context.Context, req *game.CGetProfile) (res *g
 	return res, nil
 }
 
-// TODO: Player 层的 handler
-func (s *Service) GetResults(ctx context.Context, req *game.CGetResults) (res *game.SGetResults, err error) {
+func (s *Service) GetResults(p0 Context, p1 *CGetResults) (*SGetResults, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("GetResults on goroutine %v\n", goroutineID)
 	res = &game.SGetResults{}
@@ -130,9 +117,7 @@ func (s *Service) GetResults(ctx context.Context, req *game.CGetResults) (res *g
 	return
 }
 
-// TODO: Server 层的 handler
-// Login
-func (s *Service) Login(c context.Context, req *game.CLogin) (*game.SLogin, error) {
+func (s *Service) Login(p0 Context, p1 *CLogin) (*SLogin, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("Login on goroutine %v\n", goroutineID)
 	ctx := c.(framework.IContext)
@@ -140,19 +125,14 @@ func (s *Service) Login(c context.Context, req *game.CLogin) (*game.SLogin, erro
 	if err != nil {
 		return nil, err
 	}
-
-	// 创建player
 	if p == nil {
 		p, err = obj.NewPlayer(ctx.GetPlayerId())
 		if err != nil {
 			return nil, err
 		}
-
 		if err = playerMgr.Instance().PutPlayer(p); err != nil {
 			return nil, err
 		}
-
-		// 保存
 		err = p.SavePlayerFull()
 		if err != nil {
 			return nil, err
@@ -160,39 +140,30 @@ func (s *Service) Login(c context.Context, req *game.CLogin) (*game.SLogin, erro
 	}
 	s.player = p
 	p.GetModelPlayerInfo().SetLastLoginTime(time.Now().UnixMilli())
-
-	//push 登录事件
 	ctx.PublishEventLocal(&event.LoginEvent{Pid: s.playerId})
-
-	// 返回值
 	res := &game.SLogin{}
 	res.Model = s.player.ToPB()
 	logger.Info("player login finished！", "playerId", ctx.GetPlayerId())
-
 	logger.Debugf("player login at Goroutine %v", func() uint64 {
 		gID, _ := stp.GoroutineID()
 		return gID
 	}())
-
 	return res, nil
 }
 
-// TODO: Player 层的 handler
-func (s *Service) Logout(ctx context.Context, req *game.CLogout) (res *game.SLogout, err error) {
+func (s *Service) Logout(p0 Context, p1 *CLogout) (*SLogout, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("Logout on goroutine %v\n", goroutineID)
 	return nil, nil
 }
 
-// TODO: Player 层的 handler
-func (s *Service) MergeGenerator(ctx context.Context, req *game.CMergeGenerator) (res *game.SMergeGenerator, err error) {
+func (s *Service) MergeGenerator(p0 Context, p1 *CMergeGenerator) (*SMergeGenerator, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("MergeGenerator on goroutine %v\n", goroutineID)
 	return nil, nil
 }
 
-// TODO: Player 层的 handler
-func (s *Service) PlayerOffline(c context.Context, req *game.CPlayerOffline) (*game.SPlayerOffline, error) {
+func (s *Service) PlayerOffline(p0 Context, p1 *CPlayerOffline) (*SPlayerOffline, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("PlayerOffline on goroutine %v\n", goroutineID)
 	ctx := c.(framework.IContext)
@@ -203,60 +174,27 @@ func (s *Service) PlayerOffline(c context.Context, req *game.CPlayerOffline) (*g
 	return nil, nil
 }
 
-// TODO: Player 层的 handler
-// SyncModel 处理客户端往服务器同步
-// 测试数据中 model_player_info，客户端不可写入
-// 测试数据中 model_client，服务端不可写入
-/*
-{
-    "items":  [
-        {
-            "id":  "model_player_info.name",
-            "str_value":  "player_101"
-        },
-        {
-            "id":  "model_player_info.register_time",
-            "num_value":  1716170400
-        },
-        {
-            "id": "model_client.main_level",
-            "num_value": 1
-        },
-        {
-            "id": "model_client.attrs.100",
-            "num_value": 100
-        }
-    ]
-}
-*/
-func (s *Service) SyncModel(c context.Context, req *game.CSyncModel) (res *game.SSyncModel, err error) {
+func (s *Service) SyncModel(p0 Context, p1 *CSyncModel) (*SSyncModel, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("SyncModel on goroutine %v\n", goroutineID)
-	// 写入 server model
 	for _, syncItem := range req.GetItems() {
 		err = s.player.SyncFromClient(strings.Split(syncItem.Id, "."), 0, syncItem)
 		if err != nil {
-			// TODO: 这里无法保证原子操作
 			fmt.Printf("player %v SyncFromClient occurs error %v", s.player, err.Error())
 			continue
 		}
 	}
-
-	// 全量写入 db
 	s.player.SavePlayerFull()
-
-	// TODO: 增量写入 db
-
-	// response
 	res = &game.SSyncModel{}
 	res.TestRes = "this is a test response"
-
 	return
 }
 
-// TODO: Player 层的 handler
-func (s *Service) UnlockMaterialSlot(ctx context.Context, req *game.CUnlockMaterialSlot) (res *game.SUnlockMaterialSlot, err error) {
+func (s *Service) UnlockMaterialSlot(p0 Context, p1 *CUnlockMaterialSlot) (*SUnlockMaterialSlot, error) {
 	goroutineID, _ := stp.GoroutineID()
 	fmt.Printf("UnlockMaterialSlot on goroutine %v\n", goroutineID)
 	return nil, nil
+}
+
+func (s *Service) mustEmbedUnimplementedGameServiceServer() {
 }

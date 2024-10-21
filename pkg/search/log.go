@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"strings"
 	"sync"
 	"time"
 
@@ -76,4 +77,47 @@ func keyLog(splitDir, key string, keyChan chan string, wg *sync.WaitGroup) {
 		keyFile.Close()
 		wg.Done()
 	}
+}
+
+func SplitLogByLine(argFilepath, argMode, args string) {
+	splitLineSlice := strings.Split(args, "|")
+	if len(splitLineSlice) != 2 {
+		panic("not enough args")
+	}
+	splitDir := fmt.Sprintf("tmp_split_%v", time.Now().Format("20060102_150405"))
+	splitFileContentFile, err := os.OpenFile(fmt.Sprintf("./%v.log", splitDir), os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0644)
+	if err != nil {
+		panic(err)
+	}
+
+	var wg sync.WaitGroup
+	splitState := 0
+	keyMap := make(map[string]chan string)
+	stp.ReadFileLineOneByOne(argFilepath, func(s string, l int) bool {
+		if s == splitLineSlice[0] {
+			splitState = 1
+		} else if s == splitLineSlice[1] {
+			splitState = 2
+		}
+		switch splitState {
+		case 0:
+			return true
+		case 2:
+			return false
+		default:
+			_, err := splitFileContentFile.WriteString(s)
+			if err != nil {
+				fmt.Printf("key file %v write string occurs error: %v\n", splitFileContentFile.Name(), err)
+			}
+		}
+		return true
+	})
+
+	keyCount := len(keyMap)
+	fmt.Printf("key count: %v\n", keyCount)
+	wg.Add(keyCount)
+	for _, keyChan := range keyMap {
+		close(keyChan)
+	}
+	wg.Wait()
 }
