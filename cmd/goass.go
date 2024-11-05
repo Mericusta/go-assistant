@@ -7,6 +7,7 @@ import (
 
 	"github.com/Mericusta/go-assistant/pkg/generate"
 	"github.com/Mericusta/go-assistant/pkg/infer"
+	"github.com/Mericusta/go-assistant/pkg/monitor"
 	"github.com/Mericusta/go-assistant/pkg/operate"
 	"github.com/Mericusta/go-assistant/pkg/replace"
 	"github.com/Mericusta/go-assistant/pkg/search"
@@ -98,6 +99,8 @@ func mainForCommand() {
 		operate.OperateMarkdownTable(*option, *argFilepath, *args)
 	case *command == "replace":
 		replace.ReplaceCode(*argMetaType, *argMetaIdent, *argSplitRegexp, *args)
+	case *command == "monitor":
+		monitor.MonitorProcess(*args)
 	}
 }
 
