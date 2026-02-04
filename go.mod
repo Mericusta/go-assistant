@@ -5,7 +5,7 @@ go 1.22.0
 toolchain go1.23.1
 
 require (
-	github.com/Mericusta/go-extractor v0.8.4
+	github.com/Mericusta/go-extractor v0.9.2
 	github.com/Mericusta/go-stp v0.8.15
 	github.com/charmbracelet/bubbletea v0.26.3
 	github.com/go-redis/redis/v8 v8.11.5
@@ -15,6 +15,7 @@ require (
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/NimbleMarkets/ntcharts v0.1.2 // indirect
+	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/charmbracelet/bubbles v0.18.0 // indirect

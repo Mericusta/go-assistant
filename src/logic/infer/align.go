@@ -4,66 +4,63 @@ import (
 	"fmt"
 	"math"
 	"strings"
-
-	"github.com/Mericusta/go-assistant/pkg/utility"
-	"github.com/Mericusta/go-extractor"
 )
 
 func InferTheOptimalLayoutOfStructMemory(argPlatform int, argFilepath, argStructName string, argAllocationPreview, argProcess bool) {
-	gfm := utility.HandleFileMeta(argFilepath)
-	if gfm == nil {
-		return
-	}
+	// gfm := utility.HandleFileMeta(argFilepath)
+	// if gfm == nil {
+	// 	return
+	// }
 
-	gsm := extractor.SearchGoStructMeta(gfm, argStructName)
-	if gsm == nil {
-		fmt.Printf("can not find struct meta\n")
-		return
-	}
+	// gsm := extractor.SearchGoStructMeta(gfm, argStructName)
+	// if gsm == nil {
+	// 	fmt.Printf("can not find struct meta\n")
+	// 	return
+	// }
 
-	gsm.PrintAST()
+	// gsm.PrintAST()
 
-	unknownDescMemberTypeMap := make(map[string]int)
-	originStructMemberDesc := make([]*structMemberSizeAlignTypeDesc, 0)
-	for _, member := range gsm.Members() {
-		gvm := gsm.SearchMemberMeta(member)
-		if gvm == nil {
-			continue
-		}
-		gvm.PrintAST()
-		_, underLyingTypeStr, _ := gvm.Type()
-		sm, has := x64TypeSizeMap[underLyingTypeStr]
-		if has {
-			originStructMemberDesc = append(originStructMemberDesc, sm)
-		} else {
-			unknownDescMemberTypeMap[underLyingTypeStr]++
-		}
-	}
+	// unknownDescMemberTypeMap := make(map[string]int)
+	// originStructMemberDesc := make([]*structMemberSizeAlignTypeDesc, 0)
+	// for _, member := range gsm.Members() {
+	// 	gvm := gsm.SearchMemberMeta(member)
+	// 	if gvm == nil {
+	// 		continue
+	// 	}
+	// 	gvm.PrintAST()
+	// 	_, underLyingTypeStr, _ := gvm.Type()
+	// 	sm, has := x64TypeSizeMap[underLyingTypeStr]
+	// 	if has {
+	// 		originStructMemberDesc = append(originStructMemberDesc, sm)
+	// 	} else {
+	// 		unknownDescMemberTypeMap[underLyingTypeStr]++
+	// 	}
+	// }
 
-	compilerDefaultAlign := 8
-	if argPlatform == 32 {
-		compilerDefaultAlign = 4
-	}
+	// compilerDefaultAlign := 8
+	// if argPlatform == 32 {
+	// 	compilerDefaultAlign = 4
+	// }
 
-	minWasting := math.MaxInt16
-	allocation, wasting, _, allocationPreview := calculateStructMemoryAllocation(compilerDefaultAlign, originStructMemberDesc, argProcess)
-	if minWasting < wasting {
-		wasting = minWasting
-	}
-	if len(unknownDescMemberTypeMap) > 0 {
-		fmt.Printf("the optimal layout of known struct allocation is: %v, memory utilization %.2f%%\n", allocation, float64(allocation-wasting)/float64(allocation)*100)
-		for unknownDescMemberType := range unknownDescMemberTypeMap {
-			fmt.Printf("unknown desc member type: %v\n", unknownDescMemberType)
-		}
-		if argAllocationPreview {
-			fmt.Printf("allocation preview: %v\n", allocationPreview)
-		}
-	} else {
-		fmt.Printf("the optimal layout of struct allocation is: %v, memory utilization %.2f%%\n", allocation, float64(allocation-wasting)/float64(allocation)*100)
-		if argAllocationPreview {
-			fmt.Printf("allocation preview: %v\n", allocationPreview)
-		}
-	}
+	// minWasting := math.MaxInt16
+	// allocation, wasting, _, allocationPreview := calculateStructMemoryAllocation(compilerDefaultAlign, originStructMemberDesc, argProcess)
+	// if minWasting < wasting {
+	// 	wasting = minWasting
+	// }
+	// if len(unknownDescMemberTypeMap) > 0 {
+	// 	fmt.Printf("the optimal layout of known struct allocation is: %v, memory utilization %.2f%%\n", allocation, float64(allocation-wasting)/float64(allocation)*100)
+	// 	for unknownDescMemberType := range unknownDescMemberTypeMap {
+	// 		fmt.Printf("unknown desc member type: %v\n", unknownDescMemberType)
+	// 	}
+	// 	if argAllocationPreview {
+	// 		fmt.Printf("allocation preview: %v\n", allocationPreview)
+	// 	}
+	// } else {
+	// 	fmt.Printf("the optimal layout of struct allocation is: %v, memory utilization %.2f%%\n", allocation, float64(allocation-wasting)/float64(allocation)*100)
+	// 	if argAllocationPreview {
+	// 		fmt.Printf("allocation preview: %v\n", allocationPreview)
+	// 	}
+	// }
 }
 
 var x64TypeSizeMap = map[string]*structMemberSizeAlignTypeDesc{

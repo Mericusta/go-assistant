@@ -12,12 +12,9 @@
             "program": "${workspaceFolder}/cmd/goass.go",
             "args": [
                 "-cmd=generate",
-                "-opt=implement",
+                "-opt=grpc",
                 "-file=${workspaceFolder}/resources/game.grpc_grpc.pb.go",
                 "-interface=GameServiceServer",
-                "-ident=s",
-                "-types=Service",
-                "-arg=${workspaceFolder}/resources/res.go",
             ]
         },
         {

@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Mericusta/go-assistant/pkg/utility"
+	"github.com/Mericusta/go-assistant/src/utility"
 	"github.com/Mericusta/go-stp"
 )
 
